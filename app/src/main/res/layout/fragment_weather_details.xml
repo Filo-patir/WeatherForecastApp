@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.WeatherDetailsFragment">
+
+    <include
+        android:id="@+id/bottom_sheet"
+        layout="@layout/botton_sheet_layout" />
+    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        tools:context=".features.WeatherDetailsFragment">-->
+
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:id="@+id/standard_bottom_sheet"-->
+    <!--            style="@style/Widget.Material3.BottomSheet"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="450dp"-->
+    <!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
+
+    <!--            &lt;!&ndash; Drag handle for accessibility &ndash;&gt;-->
+
+    <!--            &lt;!&ndash; Bottom sheet contents. &ndash;&gt;-->
+
+    <!--            <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
+    <!--                android:id="@+id/drag_handle"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintHorizontal_bias="0.5"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/textView3"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="81dp"-->
+    <!--                android:layout_marginEnd="81dp"-->
+    <!--                android:layout_marginBottom="140dp"-->
+    <!--                android:text="@string/hello_blank_fragment"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/switchMaterial2" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/textView4"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="53dp"-->
+    <!--                android:layout_marginTop="179dp"-->
+    <!--                android:text="@string/hello_blank_fragment"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--            <Button-->
+    <!--                android:id="@+id/bottomsheet_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="24dp"-->
+    <!--                android:layout_marginBottom="10dp"-->
+    <!--                android:text="@string/hello_blank_fragment"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/textView4"-->
+    <!--                app:layout_constraintStart_toStartOf="@+id/switchMaterial2" />-->
+
+    <!--            <com.google.android.material.switchmaterial.SwitchMaterial-->
+    <!--                android:id="@+id/switchMaterial2"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginBottom="25dp"-->
+    <!--                android:text="@string/hello_blank_fragment"-->
+    <!--                app:layout_constraintBottom_toTopOf="@+id/bottomsheet_button"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@+id/drag_handle" />-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
