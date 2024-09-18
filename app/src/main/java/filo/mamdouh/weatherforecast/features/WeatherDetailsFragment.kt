@@ -14,7 +14,6 @@ import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
 class WeatherDetailsFragment : Fragment() {
     lateinit var binding: FragmentWeatherDetailsBinding
 
-
     override fun onResume() {
         super.onResume()
         Log.d("Filo", "onResume: ")
@@ -40,4 +39,15 @@ class WeatherDetailsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val hourlyTextView = binding.bottomSheet.hourlyTextView
+        val weeklyTextView = binding.bottomSheet.weeklyTextView
+        hourlyTextView.setOnClickListener{
+            binding.bottomSheet.buttonBackground.animate().translationX(0f)
+        }
+        weeklyTextView.setOnClickListener{
+            binding.bottomSheet.buttonBackground.animate().translationX(500f)
+        }
+    }
 }

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">لهاليبو يحيح</string>
     <string name="test_text">lorem ipsum dolor sit amet</string>
+    <string name="hourly_forecast">Hourly Forecast</string>
+    <string name="weekly_forecast">Weekly Forecast</string>
+    <string name="degree">°</string>
+    <string name="celsius_symbol">C</string>
+    <string name="fahrenheit_symbol">F</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="wind_direction">Wind Direction</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="sun_rise">Sunrise</string>
+    <string name="sunset">Sunset</string>
 </resources>

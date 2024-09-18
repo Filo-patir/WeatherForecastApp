@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/bottom_sheet"
-        layout="@layout/botton_sheet_layout" />
+        layout="@layout/bottom_sheet_layout" />
     <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="match_parent"-->
