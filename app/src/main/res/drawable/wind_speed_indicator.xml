@@ -4,8 +4,8 @@
         android:width="50dp"
         android:height="50dp">
         <shape android:shape="oval">
-            <solid android:color="@color/forecast_background_color" />
-            <size android:width="5dp" android:height="5dp" />
+            <stroke android:width="4dp" android:color="@color/forecast_background_color"
+                android:dashGap="2dp" android:dashWidth="0.5dp"/>
         </shape>
     </item>
     <item

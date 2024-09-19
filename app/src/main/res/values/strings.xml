@@ -6,7 +6,7 @@
     <string name="degree">°</string>
     <string name="celsius_symbol">C</string>
     <string name="fahrenheit_symbol">F</string>
-    <string name="wind_speed">Wind Speed</string>
+    <string name="wind">Wind</string>
     <string name="wind_direction">Wind Direction</string>
     <string name="humidity">Humidity</string>
     <string name="pressure">Pressure</string>
@@ -16,4 +16,7 @@
     <string name="w">W</string>
     <string name="n">N</string>
     <string name="e">E</string>
+    <string name="wind_gust">Wind Gust</string>
+    <string name="meter_sec">meter/sec</string>
+    <string name="clouds">Clouds</string>
 </resources>
