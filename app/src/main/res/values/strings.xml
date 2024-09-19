@@ -12,4 +12,8 @@
     <string name="pressure">Pressure</string>
     <string name="sun_rise">Sunrise</string>
     <string name="sunset">Sunset</string>
+    <string name="s">S</string>
+    <string name="w">W</string>
+    <string name="n">N</string>
+    <string name="e">E</string>
 </resources>
