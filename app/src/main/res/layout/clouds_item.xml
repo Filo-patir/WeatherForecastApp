@@ -64,9 +64,9 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="30%"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="@+id/linearProgressIndicator"
-        app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator" />
+        app:layout_constraintStart_toStartOf="@+id/linearProgressIndicator"
+        tools:text="30%" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

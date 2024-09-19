@@ -1,5 +1,9 @@
 package filo.mamdouh.weatherforecast.models
 
 data class Sys(
-    val pod: String
+    val country: String,
+    val id: Int,
+    val sunrise: Long,
+    val sunset: Long,
+    val type: Int
 )

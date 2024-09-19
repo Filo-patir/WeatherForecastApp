@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features
+package filo.mamdouh.weatherforecast.features.home
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
+import filo.mamdouh.weatherforecast.models.CurrentWeather
+import filo.mamdouh.weatherforecast.models.WeatherForecast
 
 
 class WeatherDetailsFragment : Fragment() {
@@ -41,13 +43,13 @@ class WeatherDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val hourlyTextView = binding.bottomSheet.hourlyTextView
-        val weeklyTextView = binding.bottomSheet.weeklyTextView
-        hourlyTextView.setOnClickListener{
-            binding.bottomSheet.buttonBackground.animate().translationX(0f)
-        }
-        weeklyTextView.setOnClickListener{
-            binding.bottomSheet.buttonBackground.animate().translationX(500f)
-        }
+
+    }
+
+    fun setBottomSheetData(data: CurrentWeather){
+        val bottomSheet = binding.bottomSheet
+    }
+    fun setBottomSheetData(data: WeatherForecast){
+
     }
 }

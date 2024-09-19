@@ -6,7 +6,7 @@
     app:startDestination="@id/weatherDetailsFragment">
     <fragment
         android:id="@+id/weatherDetailsFragment"
-        android:name="filo.mamdouh.weatherforecast.features.WeatherDetailsFragment"
+        android:name="filo.mamdouh.weatherforecast.features.home.WeatherDetailsFragment"
         android:label="fragment_weather_details"
         tools:layout="@layout/fragment_weather_details" />
 </navigation>

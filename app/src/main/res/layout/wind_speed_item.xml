@@ -8,24 +8,15 @@
     android:background="@drawable/details_card_background">
 
     <TextView
-        android:id="@+id/decimalSpeed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:text="4.75" />
-
-    <TextView
         android:id="@+id/windSpeedTitle"
         style="@style/CardDetailsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/wind"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        android:text="@string/wind" />
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -44,25 +35,25 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-<!--    <com.google.android.material.progressindicator.CircularProgressIndicator-->
-<!--        android:id="@+id/circularProgressBar"-->
-<!--        style="@style/Widget.Material3.CircularProgressIndicator.Small"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:indeterminate="false"-->
-<!--        android:progress="4"-->
-<!--        android:rotation="355"-->
-<!--        app:indeterminate="false"-->
-<!--        app:indicatorColor="@color/white"-->
-<!--        app:indicatorDirectionCircular="clockwise"-->
-<!--        app:indicatorTrackGapSize="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="@id/guideline2"-->
-<!--        app:layout_constraintStart_toStartOf="@id/guideline2"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView3"-->
-<!--        app:trackColor="@color/forecast_background_color"-->
-<!--        app:trackThickness="40dp" />-->
+    <!--    <com.google.android.material.progressindicator.CircularProgressIndicator-->
+    <!--        android:id="@+id/circularProgressBar"-->
+    <!--        style="@style/Widget.Material3.CircularProgressIndicator.Small"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:indeterminate="false"-->
+    <!--        android:progress="4"-->
+    <!--        android:rotation="355"-->
+    <!--        app:indeterminate="false"-->
+    <!--        app:indicatorColor="@color/white"-->
+    <!--        app:indicatorDirectionCircular="clockwise"-->
+    <!--        app:indicatorTrackGapSize="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/guideline2"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/guideline2"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView3"-->
+    <!--        app:trackColor="@color/forecast_background_color"-->
+    <!--        app:trackThickness="40dp" />-->
 
     <TextView
         android:id="@+id/textView3"
@@ -72,6 +63,8 @@
         android:text="@string/e"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/circularProgressBar"
         app:layout_constraintTop_toTopOf="@+id/circularProgressBar" />
 
@@ -96,6 +89,8 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/circularProgressBar"
         app:layout_constraintEnd_toStartOf="@+id/circularProgressBar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/speed"
         app:layout_constraintTop_toTopOf="@+id/circularProgressBar" />
 
     <TextView
@@ -115,16 +110,18 @@
         android:layout_height="90dp"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline2"
-        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:srcCompat="@drawable/wind_speed_indicator" />
 
     <TextView
-        android:id="@+id/tenthSpeed"
+        android:id="@+id/speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/textView7"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         tools:text="4.47" />
@@ -143,28 +140,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/meter_sec"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tenthSpeed"
-        app:layout_constraintStart_toStartOf="@id/tenthSpeed"
-        app:layout_constraintTop_toBottomOf="@+id/tenthSpeed" />
+        app:layout_constraintEnd_toEndOf="@+id/speed"
+        app:layout_constraintStart_toStartOf="@id/speed"
+        app:layout_constraintTop_toBottomOf="@+id/speed" />
 
-    <TextView
-        android:id="@+id/speedUnit2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/meter_sec"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/decimalSpeed"
-        app:layout_constraintStart_toStartOf="@+id/decimalSpeed"
-        app:layout_constraintTop_toBottomOf="@+id/decimalSpeed" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/wind_gust"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="@+id/decimalSpeed"
-        app:layout_constraintStart_toStartOf="@+id/decimalSpeed" />
 </androidx.constraintlayout.widget.ConstraintLayout>

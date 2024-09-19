@@ -2,16 +2,16 @@ package filo.mamdouh.weatherforecast.models
 
 data class CurrentWeather(
     val base: String,
-    val clouds: CloudsX,
+    val clouds: Clouds,
     val cod: Int,
-    val coord: CoordX,
+    val coord: Coord,
     val dt: Int,
     val id: Int,
-    val main: MainX,
+    val main: Main,
     val name: String,
-    val sys: SysX,
+    val sys: Sys,
     val timezone: Int,
     val visibility: Int,
-    val weather: List<WeatherX>,
-    val wind: WindX
+    val weather: List<Weather>,
+    val wind: Wind
 )

@@ -16,7 +16,7 @@
         tools:srcCompat="@drawable/sun" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/dayTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
@@ -24,7 +24,7 @@
         tools:text="MON" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/weatherTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
