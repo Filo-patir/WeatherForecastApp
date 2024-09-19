@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt") // Only for Kotlin projects
+    id("io.objectbox") // Apply last
 }
 
 android {
@@ -38,6 +40,13 @@ android {
 }
 
 dependencies {
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    //ROOM
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
     //Navigation dependencies
     implementation(libs.navigation.ui)
     implementation(libs.navigation.fragment)
