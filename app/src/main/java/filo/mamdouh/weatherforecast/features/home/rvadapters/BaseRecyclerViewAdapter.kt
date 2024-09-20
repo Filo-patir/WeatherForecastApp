@@ -1,6 +1,8 @@
 package filo.mamdouh.weatherforecast.features.home.rvadapters
 
 import android.content.Context
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,23 +14,61 @@ import filo.mamdouh.weatherforecast.databinding.DetailsRecyclerViewBinding
 import filo.mamdouh.weatherforecast.databinding.ParentWeatherForecastItemBinding
 import filo.mamdouh.weatherforecast.databinding.SunMoonRiseItemBinding
 import filo.mamdouh.weatherforecast.logic.toHourMinute
+import filo.mamdouh.weatherforecast.models.Clouds
+import filo.mamdouh.weatherforecast.models.Coord
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.ForecastItems
+import filo.mamdouh.weatherforecast.models.Main
+import filo.mamdouh.weatherforecast.models.Sys
+import filo.mamdouh.weatherforecast.models.Wind
 import java.time.Instant
 
-class BaseRecyclerViewAdapter(val forecastItems: List<ForecastItems>,val timeZone: Int, val data: CurrentWeather) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var context: Context
+    companion object {
+        const val VIEW_TYPE_ITEM_1 = 0
+        const val VIEW_TYPE_ITEM_2 = 1
+        const val VIEW_TYPE_ITEM_3 = 2
+        const val VIEW_TYPE_ITEM_4 = 3
+    }
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> VIEW_TYPE_ITEM_1
+            1 -> VIEW_TYPE_ITEM_2
+            2 -> VIEW_TYPE_ITEM_3
+            3 -> VIEW_TYPE_ITEM_4
+            else -> throw IllegalArgumentException("Invalid position")
+        }
+    }
+    var forecastItems: List<ForecastItems> = emptyList()
+        fun setForecastItems(forecastItems: List<ForecastItems> , timezone : Int) {
+            this.forecastItems = forecastItems
+            this.timeZone = timezone
+            notifyDataSetChanged()
+        }
+    var timeZone: Int = 0
+        set(value){
+            field = value
+            notifyDataSetChanged()
+        }
+    var data = CurrentWeather("", Clouds(0), 0, Coord(0.0,0.0),0,0, Main(0.0,0,0,0.0,0.0,0.0),"",
+        Sys("",0,0L,0L,0),0,0, emptyList(), Wind(0,0.0,0.0)
+    )
+
+    fun setCurrentWeather(currentWeather: CurrentWeather) {
+        data = currentWeather
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         return when (viewType) {
-            0 -> ForeCastViewHolder(parent)
-            1 -> DetailsViewHolder(parent)
-            2 -> CloudsWindSpeedViewHolder(parent)
-            3 -> SunriseViewHolder(parent)
+            0 -> ForeCastViewHolder(LayoutInflater.from(context).inflate(R.layout.parent_weather_forecast_item, parent, false))
+            1 -> DetailsViewHolder(LayoutInflater.from(context).inflate(R.layout.details_recycler_view, parent, false))
+            2 -> CloudsWindSpeedViewHolder(LayoutInflater.from(context).inflate(R.layout.clouds_speed_item, parent, false))
+            3 -> SunriseViewHolder(LayoutInflater.from(context).inflate(R.layout.sun_moon_rise_item, parent, false))
             else -> EmptyViewHolder(parent)
         }
     }
-
     override fun getItemCount(): Int {
         return 4
     }
@@ -44,18 +84,17 @@ class BaseRecyclerViewAdapter(val forecastItems: List<ForecastItems>,val timeZon
                 }
                 viewHolder.binding.apply {
                     hourlyTextView.setOnClickListener{
-                        buttonBackground.animate().translationX(0f)
+                        buttonBackground2.animate().translationX(0f)
                             adapter.updateList(forecastItems)
                         }
                     weeklyTextView.setOnClickListener{
-                        buttonBackground.animate().translationX(500f)
+                        buttonBackground2.animate().translationX(500f)
                         adapter.updateList(forecastItems)
                     }
                 }
             }
             1 -> {
                 val viewHolder = holder as DetailsViewHolder
-
                 viewHolder.binding.apply {
                     detailsRecyclerView.apply {
                         layoutManager = GridLayoutManager(context,2)
@@ -72,6 +111,10 @@ class BaseRecyclerViewAdapter(val forecastItems: List<ForecastItems>,val timeZon
                         speedUnit.text = context.getString(R.string.meter_sec)
                     }
                     clouds.apply {
+                        textView9.text = buildString {
+                            append(data.clouds.all.toString())
+                            append(context.getString(R.string.percentage))
+                        }
                         linearProgressIndicator.progress = data.clouds.all
                     }
                 }
@@ -82,17 +125,23 @@ class BaseRecyclerViewAdapter(val forecastItems: List<ForecastItems>,val timeZon
                     sunriseTxt.text = data.sys.sunrise.toHourMinute(timeZone)
                     sunsetTxt.text = data.sys.sunset.toHourMinute(timeZone)
                     val dayLength = data.sys.sunset - data.sys.sunrise
-                    val sunImgVal= ((Instant.now().epochSecond-data.sys.sunrise)/dayLength).toFloat().coerceIn(0f,1f) *180
-                    val moonImgVal= ((Instant.now().epochSecond-data.sys.sunset)/dayLength).toFloat().coerceIn(0f,1f) *180
-                    sunImg.animate().translationX((sunImgVal))
-                    sunImg.animate().translationY((sunImgVal))
-                    moonImg.animate().translationX(moonImgVal)
-                    moonImg.animate().translationY(moonImgVal)
+                    if(dayLength>0) {
+                        val sunriseDifference = Instant.now().epochSecond - data.sys.sunrise
+                        val sunsetDifference = Instant.now().epochSecond - data.sys.sunset
+                        val sunImgVal = (sunriseDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 475
+                        val moonImgVal =
+                            (sunsetDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 475
+                        Log.d("Filo", "onBindViewHolder: ${data.sys.sunset}")
+                        Log.d("Filo", "onBindViewHolder: $moonImgVal")
+                        sunImg.animate().translationX((sunImgVal))
+                        sunImg.animate().translationY((-sunImgVal))
+                        moonImg.animate().translationX(moonImgVal)
+                        moonImg.animate().translationY(-moonImgVal)
+                    }
                     }
                 }
             }
         }
-    }
 
     class ForeCastViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var binding = ParentWeatherForecastItemBinding.bind(itemView)
@@ -109,5 +158,4 @@ class BaseRecyclerViewAdapter(val forecastItems: List<ForecastItems>,val timeZon
     }
     class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
-
 }
