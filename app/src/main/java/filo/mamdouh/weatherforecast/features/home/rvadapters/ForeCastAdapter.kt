@@ -11,11 +11,12 @@ import filo.mamdouh.weatherforecast.logic.toHour
 import filo.mamdouh.weatherforecast.logic.toTime
 import filo.mamdouh.weatherforecast.models.ForecastItems
 
-class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone:Int , private val flag: Boolean) :
+class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone:Int , private var flag: Boolean) :
     RecyclerView.Adapter<ForeCastAdapter.ForeCastViewHolder>() {
 
-        fun updateList(list: List<ForecastItems>){
+        fun updateList(list: List<ForecastItems>, flag: Boolean){
             this.list = list
+            this.flag = flag
             notifyDataSetChanged()
         }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForeCastViewHolder {

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:layout_marginTop="16dp"
+    android:layout_margin="16dp"
+    android:layout_marginBottom="20dp"
     android:background="@drawable/details_card_background">
 
     <ImageView
@@ -12,29 +13,11 @@
         android:layout_width="331dp"
         android:layout_height="324dp"
         android:layout_marginTop="20dp"
-        android:rotation="90"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/empty_circle" />
 
-    <ImageView
-        android:id="@+id/moonImg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/sunImg"
-        app:layout_constraintStart_toStartOf="@+id/sunImg"
-        app:layout_constraintTop_toTopOf="@+id/group"
-        app:srcCompat="@drawable/moon" />
-
-    <ImageView
-        android:id="@+id/sunImg"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        app:layout_constraintEnd_toEndOf="@id/textView2"
-        app:layout_constraintStart_toStartOf="@id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/group"
-        app:srcCompat="@drawable/sun" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"

@@ -40,7 +40,8 @@
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="@+id/hourlyTextView"
         app:layout_constraintStart_toStartOf="@+id/hourlyTextView"
-        app:layout_constraintTop_toBottomOf="@+id/hourlyTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/hourlyTextView"
+        app:srcCompat="@drawable/clicked_button_forecast" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/childWeatherForecastRV"

@@ -1,7 +1,6 @@
 package filo.mamdouh.weatherforecast.features.home.rvadapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,11 +84,11 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 viewHolder.binding.apply {
                     hourlyTextView.setOnClickListener{
                         buttonBackground2.animate().translationX(0f)
-                            adapter.updateList(forecastItems)
+                            adapter.updateList(forecastItems,true)
                         }
                     weeklyTextView.setOnClickListener{
                         buttonBackground2.animate().translationX(500f)
-                        adapter.updateList(forecastItems)
+                        adapter.updateList(forecastItems,false)
                     }
                 }
             }
@@ -127,16 +126,8 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     val dayLength = data.sys.sunset - data.sys.sunrise
                     if(dayLength>0) {
                         val sunriseDifference = Instant.now().epochSecond - data.sys.sunrise
-                        val sunsetDifference = Instant.now().epochSecond - data.sys.sunset
-                        val sunImgVal = (sunriseDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 475
-                        val moonImgVal =
-                            (sunsetDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 475
-                        Log.d("Filo", "onBindViewHolder: ${data.sys.sunset}")
-                        Log.d("Filo", "onBindViewHolder: $moonImgVal")
-                        sunImg.animate().translationX((sunImgVal))
-                        sunImg.animate().translationY((-sunImgVal))
-                        moonImg.animate().translationX(moonImgVal)
-                        moonImg.animate().translationY(-moonImgVal)
+                        val sunImgVal = (sunriseDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 180
+                        imageView5.animate().rotation(sunImgVal)
                     }
                     }
                 }
