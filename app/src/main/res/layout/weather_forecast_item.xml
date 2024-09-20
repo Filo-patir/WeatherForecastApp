@@ -2,35 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemLayout"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_height="200dp"
+    android:layout_margin="10dp"
+    android:gravity="center"
     android:orientation="vertical"
     tools:background="@drawable/sunny_background">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="75dp"
-        android:layout_height="100dp"
+        android:layout_height="75dp"
         android:layout_gravity="center_horizontal"
         tools:srcCompat="@drawable/sun" />
 
     <TextView
         android:id="@+id/dayTxt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
         android:fontFamily="@font/roboto_bold"
-        android:textSize="20sp"
+        android:textColor="@color/white"
         tools:text="MON" />
 
     <TextView
         android:id="@+id/weatherTxt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="2dp"
         android:fontFamily="@font/roboto_bold"
-        android:textSize="24sp"
+        android:textColor="@color/white"
         tools:text="20°C" />
 
 </LinearLayout>

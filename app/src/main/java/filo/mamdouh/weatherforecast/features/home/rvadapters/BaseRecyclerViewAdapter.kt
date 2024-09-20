@@ -76,9 +76,9 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         when (position) {
             0 -> {
                 val viewHolder = holder as ForeCastViewHolder
-                val adapter = ForeCastAdapter(forecastItems,timeZone, false)
+                val adapter = ForeCastAdapter(forecastItems,timeZone, true)
                 viewHolder.binding.childWeatherForecastRV.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, true)
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
                     this.adapter = adapter
                 }
                 viewHolder.binding.apply {
@@ -127,7 +127,7 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     if(dayLength>0) {
                         val sunriseDifference = Instant.now().epochSecond - data.sys.sunrise
                         val sunImgVal = (sunriseDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 180
-                        imageView5.animate().rotation(sunImgVal)
+                        imageView5.animate().rotation(sunImgVal).setDuration(1000)
                     }
                     }
                 }
