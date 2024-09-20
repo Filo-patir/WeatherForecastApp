@@ -6,11 +6,11 @@ import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.WeatherForecast
 
 object Repository {
-    private val networkDataSourse : NetworkDataSource = NetworkDataSourceImpl()
+    private val networkDataSource : NetworkDataSource = NetworkDataSourceImpl()
     suspend fun getCurrentWeather(lat: Double, lon: Double , unit: String): CurrentWeather {
-        return networkDataSourse.getCurrentWeather(lat, lon, unit)
+        return networkDataSource.getCurrentWeather(lat, lon, unit)
     }
     suspend fun getWeeklyForecast(lat: Double, lon: Double , unit: String): WeatherForecast {
-        return networkDataSourse.getWeatherForecast(lat, lon, unit)
+        return networkDataSource.getWeatherForecast(lat, lon, unit)
     }
 }

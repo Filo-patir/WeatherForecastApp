@@ -126,7 +126,7 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     val dayLength = data.sys.sunset - data.sys.sunrise
                     if(dayLength>0) {
                         val sunriseDifference = Instant.now().epochSecond - data.sys.sunrise
-                        val sunImgVal = (sunriseDifference / dayLength.toFloat()).coerceIn(0f, 1f) * 180
+                        val sunImgVal = (sunriseDifference / dayLength.toFloat()) * 180
                         imageView5.animate().rotation(sunImgVal).setDuration(1000)
                     }
                     }
