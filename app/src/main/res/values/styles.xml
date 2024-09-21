@@ -11,4 +11,8 @@
         <item name="android:textColor">@color/secondary</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="MainFloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="tint">@color/white</item>
+        <item name="backgroundTint">@color/secondary</item>
+    </style>
 </resources>

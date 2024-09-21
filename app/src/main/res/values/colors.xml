@@ -10,4 +10,7 @@
     <color name="details_card_background">#463D86</color>
     <color name="secondary">#918EAB</color>
     <color name="shadow_white">#30ffffff</color>
+    <color name="saved_location_color">#241F45</color>
+    <color name="shadow">#30000000</color>
+    <color name="shadow_background">#90000000</color>
 </resources>

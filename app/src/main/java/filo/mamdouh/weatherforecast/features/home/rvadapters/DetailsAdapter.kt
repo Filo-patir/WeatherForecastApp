@@ -48,7 +48,7 @@ class DetailsAdapter(val data: Main, val visibilty : Int) : RecyclerView.Adapter
             //Visibilty
             2 -> {
                 holder.binding.apply {
-                    title.text = context.getString(R.string.visibilty)
+                    title.text = context.getString(R.string.visibility)
                     measure.text = buildString {
                         append(visibilty.toString())
                         append(context.getString(R.string.meter))

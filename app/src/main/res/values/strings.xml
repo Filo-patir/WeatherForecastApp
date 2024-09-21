@@ -21,7 +21,7 @@
     <string name="clouds">Clouds</string>
     <string name="feels_like">Feels Like</string>
     <string name="percentage">%</string>
-    <string name="visibilty">Visibility</string>
+    <string name="visibility">Visibility</string>
     <string name="meter">meter</string>
     <string name="pressure_unit">hPa</string>
 </resources>
