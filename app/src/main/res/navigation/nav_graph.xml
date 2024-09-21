@@ -8,5 +8,14 @@
         android:id="@+id/weatherDetailsFragment"
         android:name="filo.mamdouh.weatherforecast.features.home.WeatherDetailsFragment"
         android:label="fragment_weather_details"
-        tools:layout="@layout/fragment_weather_details" />
+        tools:layout="@layout/fragment_weather_details" >
+        <action
+            android:id="@+id/action_weatherDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="filo.mamdouh.weatherforecast.features.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

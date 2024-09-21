@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
 import filo.mamdouh.weatherforecast.features.home.rvadapters.BaseRecyclerViewAdapter
 
 
 class WeatherDetailsFragment : Fragment() {
-    lateinit var binding: FragmentWeatherDetailsBinding
-    lateinit var viewModel: WeatherDetailsViewModel
-    lateinit var adapterrv : BaseRecyclerViewAdapter
+    private lateinit var binding: FragmentWeatherDetailsBinding
+    private lateinit var adapterrv : BaseRecyclerViewAdapter
     override fun onResume() {
         super.onResume()
         Log.d("Filo", "onResume: ")
@@ -45,7 +46,7 @@ class WeatherDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProvider(this).get(WeatherDetailsViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[WeatherDetailsViewModel::class.java]
         adapterrv = BaseRecyclerViewAdapter()
         viewModel.weatherForecast.observe(viewLifecycleOwner){
             adapterrv.setForecastItems(it.list, it.city.timezone)
@@ -56,6 +57,9 @@ class WeatherDetailsFragment : Fragment() {
         binding.bottomSheet.bottomSheetRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = adapterrv
+        }
+        binding.locationImg.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_searchFragment)
         }
     }
 }

@@ -13,6 +13,7 @@
     </style>
     <style name="MainFloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
         <item name="tint">@color/white</item>
+        <item name="background">@drawable/clicked_button_forecast</item>
         <item name="backgroundTint">@color/secondary</item>
     </style>
 </resources>

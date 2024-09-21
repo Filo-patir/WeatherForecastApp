@@ -13,4 +13,5 @@
     <color name="saved_location_color">#241F45</color>
     <color name="shadow">#30000000</color>
     <color name="shadow_background">#90000000</color>
+    <color name="transparent">#00000000</color>
 </resources>
