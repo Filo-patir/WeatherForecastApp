@@ -3,6 +3,7 @@
     <style name="Base.Theme.WeatherForecast" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="android:textViewStyle">@style/MainTextViewStyle</item>
+        <item name="android:textAppearance">@style/MainTextViewStyle</item>
     </style>
     <style name="MainTextViewStyle">
         <item name="android:textColorLink">@color/white</item>

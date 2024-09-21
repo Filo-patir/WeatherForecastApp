@@ -1,83 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_details_background"
     tools:context=".features.home.WeatherDetailsFragment">
 
-    <include
-        android:id="@+id/bottom_sheet"
-        layout="@layout/bottom_sheet_layout" />
-    <!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        tools:context=".features.WeatherDetailsFragment">-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:id="@+id/standard_bottom_sheet"-->
-    <!--            style="@style/Widget.Material3.BottomSheet"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="450dp"-->
-    <!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:src="@drawable/up_arrow_svgrepo_com"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/weatherDesc" />
 
-    <!--            &lt;!&ndash; Drag handle for accessibility &ndash;&gt;-->
+    <TextView
+        android:id="@+id/lowTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        tools:text="29"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toBottomOf="@+id/weatherDesc" />
 
-    <!--            &lt;!&ndash; Bottom sheet contents. &ndash;&gt;-->
+    <ImageView
+        android:id="@+id/locationImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/baseline_location_on_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/secondary" />
 
-    <!--            <com.google.android.material.bottomsheet.BottomSheetDragHandleView-->
-    <!--                android:id="@+id/drag_handle"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintHorizontal_bias="0.5"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/menuImg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/baseline_menu_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/secondary" />
 
-    <!--            <TextView-->
-    <!--                android:id="@+id/textView3"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginStart="81dp"-->
-    <!--                android:layout_marginEnd="81dp"-->
-    <!--                android:layout_marginBottom="140dp"-->
-    <!--                android:text="@string/hello_blank_fragment"-->
-    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintStart_toStartOf="@+id/switchMaterial2" />-->
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="Alexandria, EG"
+        app:layout_constraintEnd_toStartOf="@+id/menuImg"
+        app:layout_constraintStart_toEndOf="@+id/locationImg"
+        app:layout_constraintTop_toBottomOf="@+id/locationImg" />
 
-    <!--            <TextView-->
-    <!--                android:id="@+id/textView4"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginStart="53dp"-->
-    <!--                android:layout_marginTop="179dp"-->
-    <!--                android:text="@string/hello_blank_fragment"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+    <TextView
+        android:id="@+id/mainTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        tools:text="20"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/location"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/location"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
 
-    <!--            <Button-->
-    <!--                android:id="@+id/bottomsheet_button"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginStart="24dp"-->
-    <!--                android:layout_marginBottom="10dp"-->
-    <!--                android:text="@string/hello_blank_fragment"-->
-    <!--                app:layout_constraintBottom_toTopOf="@+id/textView4"-->
-    <!--                app:layout_constraintStart_toStartOf="@+id/switchMaterial2" />-->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toStartOf="@+id/menuImg"
+        app:layout_constraintStart_toEndOf="@+id/locationImg"
+        app:layout_constraintTop_toBottomOf="@+id/mainTemp" />
 
-    <!--            <com.google.android.material.switchmaterial.SwitchMaterial-->
-    <!--                android:id="@+id/switchMaterial2"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_marginTop="20dp"-->
-    <!--                android:layout_marginBottom="25dp"-->
-    <!--                android:text="@string/hello_blank_fragment"-->
-    <!--                app:layout_constraintBottom_toTopOf="@+id/bottomsheet_button"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintStart_toStartOf="parent"-->
-    <!--                app:layout_constraintTop_toBottomOf="@+id/drag_handle" />-->
+    <TextView
+        android:id="@+id/weatherDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        tools:text="Mostly Sunny"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="@+id/divider" />
 
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="28/4/2024"
+        android:textColor="@color/secondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/menuImg"
+        app:layout_constraintStart_toEndOf="@+id/locationImg"
+        app:layout_constraintTop_toTopOf="@+id/locationImg" />
 
-    <!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        tools:text="8:00 am"
+        app:layout_constraintEnd_toEndOf="@+id/location"
+        app:layout_constraintStart_toStartOf="@+id/location"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
+
+    <TextView
+        android:id="@+id/highTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        tools:text="29"
+        app:layout_constraintEnd_toStartOf="@+id/imageView12"
+        app:layout_constraintTop_toBottomOf="@+id/weatherDesc" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:src="@drawable/down_arrow_svgrepo_com"
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/weatherDesc" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/coordinatorLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <include
+                    android:id="@+id/bottom_sheet"
+                    layout="@layout/bottom_sheet_layout" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,6 +51,10 @@ dependencies {
     //ROOM
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
     kapt(libs.androidx.room.compiler)
     //Navigation dependencies
     implementation(libs.navigation.ui)
