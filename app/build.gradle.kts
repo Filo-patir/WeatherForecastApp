@@ -46,7 +46,10 @@ android {
 }
 
 dependencies {
+    //OSM
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
     //Hilt
+    implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     //Retrofit

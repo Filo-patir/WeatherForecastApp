@@ -43,7 +43,7 @@ class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone
                         itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.sunny_background)
                         else itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.night_background)
                         weatherTxt.text = buildString {
-                            append(main.temp.toString() + " ")
+                            append(main.temp.toString())
                             append(context.getString(R.string.degree))
                         }
                     }
@@ -57,7 +57,7 @@ class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone
                         dayTxt.text = dt.toDay(timeZone)
                         imageView.setImageResource(weather[0].icon.toDrawable())
                         weatherTxt.text = buildString {
-                            append(main.temp.toString() + " ")
+                            append(main.temp.toString())
                             append(context.getString(R.string.degree))
                         }
                     }

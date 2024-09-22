@@ -3,35 +3,41 @@ package filo.mamdouh.weatherforecast.datastorage.local.room
 import android.content.Context
 import filo.mamdouh.weatherforecast.models.SavedLocations
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class SavedLocationDataSourceImpl private constructor(context: Context): SavedLocationDataSource {
-    private val savedLocationsDao: SavedLocationsDao
-    init {
-        savedLocationsDao = AppDatabase.getInstance(context).weatherDao
-    }
-    companion object{
-        private var instance: SavedLocationDataSourceImpl? = null
-        fun getInstance(context: Context): SavedLocationDataSourceImpl{
-            return instance ?: run {
-                val temp = SavedLocationDataSourceImpl(context)
-                instance = temp
-                temp
-            }
+class SavedLocationDataSourceImpl @Inject constructor(context: Context): SavedLocationDataSource {
+    private val savedLocationsDao: SavedLocationsDao = AppDatabase.getInstance(context).weatherDao
+
+//    companion object{
+//        private var instance: SavedLocationDataSourceImpl? = null
+//        fun getInstance(context: Context): SavedLocationDataSourceImpl{
+//            return instance ?: run {
+//                val temp = SavedLocationDataSourceImpl(context)
+//                instance = temp
+//                temp
+//            }
+//        }
+//    }
+    override fun insert(savedLocations: SavedLocations): Flow<Long> {
+        return flow{
+            emit(savedLocationsDao.insert(savedLocations))
         }
     }
-    override suspend fun insert(savedLocations: SavedLocations): Flow<Long> {
-        return savedLocationsDao.insert(savedLocations)
+
+    override fun delete(savedLocations: SavedLocations): Flow<Int> {
+        return flow{
+            emit(savedLocationsDao.delete(savedLocations))
+        }
     }
 
-    override suspend fun delete(savedLocations: SavedLocations): Flow<Int> {
-        return savedLocationsDao.delete(savedLocations)
+    override fun deleteAll(): Flow<Int> {
+        return flow{
+            emit(savedLocationsDao.deleteAll())
+        }
     }
 
-    override suspend fun deleteAll(): Flow<Int> {
-        return savedLocationsDao.deleteAll()
-    }
-
-    override suspend fun getAll(): Flow<List<SavedLocations>> {
+    override fun getAll(): Flow<List<SavedLocations>> {
         return savedLocationsDao.getAll()
     }
 }

@@ -5,17 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
+import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.home.rvadapters.BaseRecyclerViewAdapter
+import filo.mamdouh.weatherforecast.models.CurrentWeather
+import filo.mamdouh.weatherforecast.models.WeatherForecast
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class WeatherDetailsFragment : Fragment() {
     private lateinit var binding: FragmentWeatherDetailsBinding
     private lateinit var adapterrv : BaseRecyclerViewAdapter
@@ -46,13 +53,31 @@ class WeatherDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProvider(this)[WeatherDetailsViewModel::class.java]
+        val viewModel by hiltNavGraphViewModels<WeatherDetailsViewModel>(R.id.nav_graph)
         adapterrv = BaseRecyclerViewAdapter()
-        viewModel.weatherForecast.observe(viewLifecycleOwner){
-            adapterrv.setForecastItems(it.list, it.city.timezone)
+        lifecycleScope.launch {
+            viewModel.weatherForecast.collect{
+                when(it) {
+                    is NetworkResponse.Failure -> Toast.makeText(context, "Failure: ${it.errorMessage}", Toast.LENGTH_SHORT)
+                    is NetworkResponse.Success -> {
+                        val data = it.data as WeatherForecast
+                        adapterrv.setForecastItems(data.list, data.city.timezone)
+                    }
+                    is NetworkResponse.Loading -> {}
+                }
+            }
         }
-        viewModel.currentWeather.observe(viewLifecycleOwner){
-            adapterrv.setCurrentWeather(it)
+        lifecycleScope.launch {
+            viewModel.currentWeather.collect{
+                when(it) {
+                    is NetworkResponse.Failure -> Toast.makeText(context, "Failure: ${it.errorMessage}", Toast.LENGTH_SHORT)
+                    is NetworkResponse.Success -> {
+                        val data = it.data as CurrentWeather
+                        adapterrv.setCurrentWeather(data)
+                    }
+                    is NetworkResponse.Loading -> {}
+                }
+            }
         }
         binding.bottomSheet.bottomSheetRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

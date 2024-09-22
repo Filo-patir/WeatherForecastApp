@@ -1,5 +1,6 @@
 package filo.mamdouh.weatherforecast.datastorage.local.room
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -7,13 +8,14 @@ import androidx.room.Query
 import filo.mamdouh.weatherforecast.models.SavedLocations
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface SavedLocationsDao {
     @Query("SELECT * FROM saved_locations")
-    suspend fun getAll(): Flow<List<SavedLocations>>
+    fun getAll(): Flow<List<SavedLocations>>
     @Query("DELETE FROM saved_locations")
-    suspend fun deleteAll() : Flow<Int>
+    fun deleteAll() : Int
     @Delete
-    suspend fun delete(savedLocations: SavedLocations) : Flow<Int>
+    fun delete(savedLocations: SavedLocations) : Int
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(savedLocations: SavedLocations) : Flow<Long>
+    fun insert(savedLocations: SavedLocations) : Long
 }

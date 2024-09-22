@@ -1,48 +1,57 @@
 package filo.mamdouh.weatherforecast.features.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import filo.mamdouh.weatherforecast.datastorage.Repository
-import filo.mamdouh.weatherforecast.models.CurrentWeather
-import filo.mamdouh.weatherforecast.models.WeatherForecast
+import dagger.hilt.android.lifecycle.HiltViewModel
+import filo.mamdouh.weatherforecast.datastorage.IRepository
+import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class WeatherDetailsViewModel : ViewModel() {
-    private val repo = Repository
+@HiltViewModel
+class WeatherDetailsViewModel @Inject constructor (private val repo: IRepository) : ViewModel() {
     private val dispatcher = Dispatchers.IO
-    private var _currentWeather = MutableLiveData<CurrentWeather>()
-    val currentWeather: LiveData<CurrentWeather> = _currentWeather
-    private var _weatherForecast = MutableLiveData<WeatherForecast>()
-    val weatherForecast: LiveData<WeatherForecast> = _weatherForecast
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading
-        .onStart { getData() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3600000L),false)
-    init{
-        getData()
-    }
+    private var _currentWeather = MutableStateFlow<NetworkResponse>(NetworkResponse.Loading)
+    val currentWeather= _currentWeather.onStart { getData() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3600000L),NetworkResponse.Loading)
+    private var _weatherForecast = MutableStateFlow<NetworkResponse>(NetworkResponse.Loading)
+    val weatherForecast = _weatherForecast.onStart { getData() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3600000L),NetworkResponse.Loading)
 
-    fun getData() {
-        _isLoading.value = true
+    private fun getData() {
+        getWeatherData()
+        getWeatherForecast()
+    }
+    private fun getWeatherData(){
         viewModelScope.launch(dispatcher) {
             val value = repo.getCurrentWeather(31.199004,29.894378,"metric")
-            withContext(Dispatchers.Main){
-                _currentWeather.value = value
+            if (value.isSuccessful)
+            {
+                if (value.body()?.cod == 200 )
+                    _currentWeather.value = NetworkResponse.Success(value.body())
+                else
+                    _currentWeather.value = NetworkResponse.Failure(value.body()?.message ?: "Error")
             }
-            _isLoading.value = false
+            else
+                _currentWeather.value = NetworkResponse.Failure(value.message())
         }
+    }
+    private fun getWeatherForecast(){
         viewModelScope.launch(dispatcher){
             val value = repo.getWeeklyForecast(31.199004,29.894378,"metric")
-            withContext(Dispatchers.Main){
-                _weatherForecast.value = value
+            if (value.isSuccessful)
+            {
+                try {
+                        _weatherForecast.value = NetworkResponse.Success(value.body())
+                } catch (e: Exception) {
+                    _weatherForecast.value = NetworkResponse.Failure(e.message ?: "Error")
+                }
             }
+            else
+                _weatherForecast.value = NetworkResponse.Failure(value.message())
         }
     }
 }

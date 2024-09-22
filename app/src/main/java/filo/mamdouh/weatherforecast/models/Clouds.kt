@@ -1,5 +1,5 @@
 package filo.mamdouh.weatherforecast.models
 
 data class Clouds(
-    val all: Int
+    val all: Int = 0
 )

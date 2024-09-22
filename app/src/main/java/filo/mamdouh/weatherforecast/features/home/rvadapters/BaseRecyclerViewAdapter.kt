@@ -13,13 +13,8 @@ import filo.mamdouh.weatherforecast.databinding.DetailsRecyclerViewBinding
 import filo.mamdouh.weatherforecast.databinding.ParentWeatherForecastItemBinding
 import filo.mamdouh.weatherforecast.databinding.SunMoonRiseItemBinding
 import filo.mamdouh.weatherforecast.logic.toHourMinute
-import filo.mamdouh.weatherforecast.models.Clouds
-import filo.mamdouh.weatherforecast.models.Coord
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.ForecastItems
-import filo.mamdouh.weatherforecast.models.Main
-import filo.mamdouh.weatherforecast.models.Sys
-import filo.mamdouh.weatherforecast.models.Wind
 import java.time.Instant
 
 class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -50,9 +45,7 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             field = value
             notifyDataSetChanged()
         }
-    var data = CurrentWeather("", Clouds(0), 0, Coord(0.0,0.0),0,0, Main(0.0,0,0,0.0,0.0,0.0),"",
-        Sys("",0,0L,0L,0),0,0, emptyList(), Wind(0,0.0,0.0)
-    )
+    var data = CurrentWeather()
 
     fun setCurrentWeather(currentWeather: CurrentWeather) {
         data = currentWeather
