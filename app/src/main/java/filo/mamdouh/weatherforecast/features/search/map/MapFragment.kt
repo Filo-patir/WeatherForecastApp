@@ -1,8 +1,7 @@
-package filo.mamdouh.weatherforecast.features.search.search
+package filo.mamdouh.weatherforecast.features.search.map
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +12,14 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentMapBinding
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.dialogs.LocationConfirmationDialog
 import filo.mamdouh.weatherforecast.models.Location
+import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -40,6 +41,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
     private lateinit var binding: FragmentMapBinding
     private lateinit var mMap: MapView
     private lateinit var marker: Marker
+    private var location: LocationItem? = null
 
     private val viewModel by hiltNavGraphViewModels<MapViewModel>(R.id.nav_graph)
 
@@ -55,10 +57,10 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         super.onViewCreated(view, savedInstanceState)
         Configuration.getInstance().load(
             context,
-            activity?.getSharedPreferences(getString(filo.mamdouh.weatherforecast.R.string.app_name), MODE_PRIVATE)
+            activity?.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         )
         mMap = binding.osmmap
-        binding.editTextText.setOnKeyListener{ v, keyCode, event -> onSearchListener(v, keyCode, event)}
+        binding.editTextText.setOnKeyListener{ _, keyCode, event -> onSearchListener(keyCode, event)}
         mapSetup()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED){
@@ -70,7 +72,10 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                             val data = it.data as Location
                             if (data.isEmpty())
                                 mMap.overlays.remove(marker)
-                            else setMarker(GeoPoint(data[0].lat, data[0].lon))
+                            else {
+                                location = data[0]
+                                setMarker(location!!)
+                            }
                         }
                     }
                 }
@@ -98,7 +103,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
 
     private fun mapSetup(){
         marker = Marker(mMap)
-        marker.setOnMarkerClickListener { marker, mapView ->
+        marker.setOnMarkerClickListener { marker, _ ->
                 LocationConfirmationDialog.showDialog(
                     requireContext(),
                     this@MapFragment,
@@ -134,7 +139,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
 
                 override fun longPressHelper(p: GeoPoint?): Boolean {
                     if (p != null) {
-                        setMarker(p)
+                        viewModel.getLocation(p.latitude, p.longitude)
                     }
                     return false
                 }
@@ -144,25 +149,34 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
     }
 
     override fun onSearchLocationClicked() {
-        Log.d("Filo", "onSearchLocationClicked: ")
+        Toast.makeText(context, "Location Saved", Toast.LENGTH_SHORT).show()
+        viewModel.saveLocation(location)
+        Navigation.findNavController(binding.osmmap).navigateUp()
     }
 
-    fun setMarker(position: GeoPoint){
+    private fun setMarker(locationItem: LocationItem){
+        val position = GeoPoint(locationItem.lat, locationItem.lon)
         mMap.overlays.remove(marker)
         marker.position = position
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         mMap.controller.setCenter(position)
         mMap.controller.animateTo(position)
         mMap.overlays.add(marker)
-        LocationConfirmationDialog.showDialog(requireContext(),this@MapFragment, position.toString())
+        LocationConfirmationDialog.showDialog(requireContext(),this@MapFragment, "${locationItem.name} , ${locationItem.country}")
     }
 
-    private fun onSearchListener(view: View,keyCode: Int, event: KeyEvent) : Boolean{
+    private fun onSearchListener(keyCode: Int, event: KeyEvent) : Boolean{
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-            viewModel.getData(binding.editTextText.text.toString())
+            viewModel.getCoordinates(binding.editTextText.text.toString())
             return true
         } else {
             return false
         }
+    }
+
+    override fun onDetach() {
+        mMap.onDetach()
+        mMap.overlays.remove(marker)
+        super.onDetach()
     }
 }

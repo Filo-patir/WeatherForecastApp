@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
+import filo.mamdouh.weatherforecast.features.search.main.adapter.RVAdapter
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -32,6 +37,17 @@ class SearchFragment : Fragment() {
         val viewModel by hiltNavGraphViewModels<SearchViewModel>(R.id.nav_graph)
         binding.floatingActionButton.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
+        }
+        val adapter = RVAdapter()
+        binding.searchRV.apply {
+            setAdapter(adapter)
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.list.collect{
+                    adapter.submitList(it)
+                }
+            }
         }
     }
 }

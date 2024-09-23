@@ -20,4 +20,6 @@ suspend fun getCurrentWeather(
     suspend fun getWeatherForecast(@Query("lat") lat: Double, @Query("lon") lon: Double, @Query("units") units: String, @Query("appid") appid: String = BuildConfig.API_KEY): Response<WeatherForecast>
     @GET("geo/1.0/direct")
     suspend fun getLocationByName(@Query("q") name: String, @Query("appid") appid: String = BuildConfig.API_KEY): Response<Location>
+    @GET("geo/1.0/reverse")
+    suspend fun getLocationByCoordinates(@Query("lat") lat: Double, @Query("lon") lon: Double, @Query("appid") appid: String = BuildConfig.API_KEY): Response<Location>
 }

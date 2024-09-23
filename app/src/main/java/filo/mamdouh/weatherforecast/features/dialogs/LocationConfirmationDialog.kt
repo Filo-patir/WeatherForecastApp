@@ -8,11 +8,11 @@ object LocationConfirmationDialog {
         val builder = android.app.AlertDialog.Builder(context)
         builder.setTitle("Confirm Location")
         builder.setMessage("Are you sure you want to pick $location?")
-        builder.setPositiveButton("Yes") { dialog, which ->
+        builder.setPositiveButton("Yes") { dialog, _ ->
             listener.onSearchLocationClicked()
             dialog.dismiss()
         }
-        builder.setNegativeButton("Cancel") { dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()

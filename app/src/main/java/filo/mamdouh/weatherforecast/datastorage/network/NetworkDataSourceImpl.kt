@@ -24,4 +24,8 @@ class NetworkDataSourceImpl : NetworkDataSource {
         return api.getLocationByName(name)
     }
 
+    override suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location> {
+        return api.getLocationByCoordinates(lat,lon)
+    }
+
 }
