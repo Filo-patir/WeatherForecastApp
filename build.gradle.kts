@@ -18,3 +18,11 @@ buildscript {
         classpath("io.objectbox:objectbox-gradle-plugin:$objectboxVersion")
     }
 }
+
+allprojects{
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor(0, TimeUnit.SECONDS)
+        }
+    }
+}

@@ -1,7 +1,6 @@
 package filo.mamdouh.weatherforecast.datastorage.local.room
 
 import android.content.Context
-import filo.mamdouh.weatherforecast.models.SavedLocations
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

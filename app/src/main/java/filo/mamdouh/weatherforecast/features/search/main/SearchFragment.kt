@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
+import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
-
-
+    lateinit var binding: FragmentSearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,10 +24,14 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        binding = FragmentSearchBinding.inflate(inflater)
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel by hiltNavGraphViewModels<SearchViewModel>(R.id.nav_graph)
+        binding.floatingActionButton.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
+        }
     }
 }

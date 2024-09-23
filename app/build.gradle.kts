@@ -46,8 +46,10 @@ android {
 }
 
 dependencies {
+    //lifecycle for stateflow
+    implementation(libs.androidx.lifecycle.runtime.ktx)
     //OSM
-    implementation("org.osmdroid:osmdroid-android:6.1.14")
+    implementation(libs.osmdroid.android)
     //Hilt
     implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.hilt.android)

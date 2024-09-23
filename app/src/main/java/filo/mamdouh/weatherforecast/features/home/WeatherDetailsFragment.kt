@@ -1,7 +1,6 @@
 package filo.mamdouh.weatherforecast.features.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ class WeatherDetailsFragment : Fragment() {
     private lateinit var adapterrv : BaseRecyclerViewAdapter
     override fun onResume() {
         super.onResume()
-        Log.d("Filo", "onResume: ")
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val bottomSheet = BottomSheetBehavior.from(binding.bottomSheet.standardBottomSheet)

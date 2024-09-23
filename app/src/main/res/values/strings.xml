@@ -25,4 +25,5 @@
     <string name="meter">meter</string>
     <string name="pressure_unit">hPa</string>
     <string name="high_and_low">H:%d° | L:%d°</string>
+    <string name="search_for_location">Search For Location</string>
 </resources>

@@ -1,6 +1,5 @@
 package filo.mamdouh.weatherforecast.datastorage.local.room
 
-import filo.mamdouh.weatherforecast.models.SavedLocations
 import kotlinx.coroutines.flow.Flow
 
 interface SavedLocationDataSource {

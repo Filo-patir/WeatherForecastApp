@@ -3,7 +3,7 @@ package filo.mamdouh.weatherforecast.datastorage
 import filo.mamdouh.weatherforecast.datastorage.local.room.SavedLocationDataSource
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSource
 import filo.mamdouh.weatherforecast.models.CurrentWeather
-import filo.mamdouh.weatherforecast.models.SavedLocations
+import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.WeatherForecast
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
@@ -17,6 +17,11 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
     override suspend fun getWeeklyForecast(lat: Double, lon: Double, unit: String): Response<WeatherForecast> {
         return networkDataSource.getWeatherForecast(lat, lon, unit)
     }
+
+    override suspend fun getLocationByName(name: String): Response<Location> {
+        return networkDataSource.getLocationByName(name)
+    }
+
     override fun getSavedLocations(): Flow<List<SavedLocations>> {
         return localDataSource.getAll()
     }
