@@ -10,7 +10,7 @@ import retrofit2.Response
 interface IRepository {
     suspend fun getCurrentWeather(lat: Double, lon: Double, unit: String): Response<CurrentWeather>
     suspend fun getWeeklyForecast(lat: Double, lon: Double, unit: String): Response<WeatherForecast>
-    suspend fun getLocationByName(name: String): Response<Location>
+    suspend fun getLocationByName(name: String, limit: Int = 1): Response<Location>
     suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location>
     fun getSavedLocations(): Flow<List<LocationItem>>
     fun insertSavedLocation(savedLocations: LocationItem): Flow<Long>

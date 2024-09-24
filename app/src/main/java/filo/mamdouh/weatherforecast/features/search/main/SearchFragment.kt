@@ -1,6 +1,7 @@
 package filo.mamdouh.weatherforecast.features.search.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class SearchFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.list.collect{
+                    Log.d("Filo", "onViewCreated: $it")
                     adapter.submitList(it)
                 }
             }

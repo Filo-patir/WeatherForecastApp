@@ -20,8 +20,8 @@ class NetworkDataSourceImpl : NetworkDataSource {
         units: String
     ): Response<WeatherForecast> = api.getWeatherForecast(lat,lon,units)
 
-    override suspend fun getLocationByName(name: String): Response<Location> {
-        return api.getLocationByName(name)
+    override suspend fun getLocationByName(name: String, limit : Int): Response<Location> {
+        return api.getLocationByName(name, limit)
     }
 
     override suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location> {

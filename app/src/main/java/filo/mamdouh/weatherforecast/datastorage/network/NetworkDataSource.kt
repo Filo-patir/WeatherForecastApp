@@ -8,6 +8,6 @@ import retrofit2.Response
 interface NetworkDataSource {
     suspend fun getCurrentWeather(lat: Double, lon: Double, units: String): Response<CurrentWeather>
     suspend fun getWeatherForecast(lat: Double, lon: Double, units: String): Response<WeatherForecast>
-    suspend fun getLocationByName(name: String): Response<Location>
+    suspend fun getLocationByName(name: String, limit : Int): Response<Location>
     suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location>
 }

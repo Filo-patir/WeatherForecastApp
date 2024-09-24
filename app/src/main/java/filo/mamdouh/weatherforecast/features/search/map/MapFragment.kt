@@ -2,10 +2,14 @@ package filo.mamdouh.weatherforecast.features.search.map
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -42,6 +46,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
     private lateinit var mMap: MapView
     private lateinit var marker: Marker
     private var location: LocationItem? = null
+    private lateinit var suggestions: ArrayAdapter<String>
 
     private val viewModel by hiltNavGraphViewModels<MapViewModel>(R.id.nav_graph)
 
@@ -60,7 +65,32 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
             activity?.getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE)
         )
         mMap = binding.osmmap
-        binding.editTextText.setOnKeyListener{ _, keyCode, event -> onSearchListener(keyCode, event)}
+        suggestions = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, emptyList())
+        binding.editTextText.apply {
+            setOnKeyListener{ _, keyCode, event -> onSearchListener(keyCode, event)}
+            addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    Toast.makeText(context, "Searching for $s", Toast.LENGTH_SHORT).show()
+                    viewModel.getSuggestions(s.toString())
+                }
+
+            })
+            setAdapter(suggestions)
+           showSoftInputOnFocus = true
+        }
+        setSuggestionListener()
         mapSetup()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED){
@@ -98,7 +128,9 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         //if you make changes to the configuration, use
         //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Configuration.getInstance().save(this, prefs);
+        mMap.overlays.remove(marker)
         mMap.onPause()  //needed for compass, my location overlays, v6.0.0 and up
+
     }
 
     private fun mapSetup(){
@@ -173,10 +205,28 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
             return false
         }
     }
-
-    override fun onDetach() {
-        mMap.onDetach()
-        mMap.overlays.remove(marker)
-        super.onDetach()
+    private fun setSuggestionListener(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.suggestionList.collectLatest { it ->
+                    when(it){
+                        is NetworkResponse.Failure -> {Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()}
+                        is NetworkResponse.Loading -> {}
+                        is NetworkResponse.Success -> {
+                            val data = it.data as Location
+                            Log.d("Filo", "setSuggestionListener: $data")
+                            suggestions.clear()
+                            data.forEach {
+                                suggestions.add("${it.name}, ${it.country}")
+                            }
+                            suggestions.notifyDataSetChanged()
+                            binding.editTextText.setOnItemClickListener { _, _, position, _ ->
+                                viewModel.getLocation(data[position].lat, data[position].lon)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

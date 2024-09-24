@@ -18,6 +18,8 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(private val repository: IRepository) : ViewModel() {
     private var _locationList = MutableStateFlow<NetworkResponse>(NetworkResponse.Loading)
     val locationList = _locationList.stateIn(viewModelScope, SharingStarted.Lazily, NetworkResponse.Loading)
+    private var _suggestionList = MutableStateFlow<NetworkResponse>(NetworkResponse.Loading)
+    val suggestionList = _suggestionList.stateIn(viewModelScope, SharingStarted.Lazily, NetworkResponse.Loading)
 
     fun getCoordinates(name : String) {
         viewModelScope.launch {
@@ -51,6 +53,16 @@ class MapViewModel @Inject constructor(private val repository: IRepository) : Vi
                 Log.d("Filo", "saveLocation: ${e.message}")
                 e.printStackTrace()
             }
+        }
+    }
+
+    fun getSuggestions(name: String) {
+        viewModelScope.launch {
+            val value = repository.getLocationByName(name , 5)
+            if (value.isSuccessful)
+                _suggestionList.value = NetworkResponse.Success(value.body())
+            else
+                _suggestionList.value = NetworkResponse.Failure(value.message())
         }
     }
 

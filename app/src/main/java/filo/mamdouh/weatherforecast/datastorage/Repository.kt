@@ -19,8 +19,8 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
         return networkDataSource.getWeatherForecast(lat, lon, unit)
     }
 
-    override suspend fun getLocationByName(name: String): Response<Location> {
-        return networkDataSource.getLocationByName(name)
+    override suspend fun getLocationByName(name: String, limit: Int): Response<Location> {
+        return networkDataSource.getLocationByName(name, limit)
     }
 
     override suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location> {

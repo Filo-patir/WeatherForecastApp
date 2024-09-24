@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:background="@drawable/saved_location_background"
-    android:paddingBottom="24dp">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/highLowValue"
@@ -24,15 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        tools:text="20°"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="20°" />
 
     <ImageView
         android:id="@+id/iconImg"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="20dp"
         android:importantForAccessibility="no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,8 +44,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        tools:text="Alexandria, EG"
         app:layout_constraintStart_toStartOf="@+id/highLowValue"
-        app:layout_constraintTop_toBottomOf="@+id/highLowValue" />
+        app:layout_constraintTop_toBottomOf="@+id/highLowValue"
+        tools:text="Alexandria, EG" />
+
+    <ImageView
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iconImg"
+        app:layout_constraintStart_toStartOf="@+id/iconImg"
+        app:srcCompat="@drawable/icons8_trash_30" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

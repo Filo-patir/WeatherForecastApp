@@ -1,5 +1,6 @@
 package filo.mamdouh.weatherforecast.features.search.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor (private val repository: IRepository) :  ViewModel() {
     private val _list = MutableStateFlow<List<CurrentWeather>>(emptyList())
-    val list = _list.onStart { getData() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3600000L),
+    val list = _list.onStart { getData() }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(3600000L),
         emptyList()
     )
     private fun getData() {
@@ -29,8 +32,9 @@ class SearchViewModel @Inject constructor (private val repository: IRepository) 
                         list.add(value.body()!!)
                     }
                 }
+                Log.d("Filo", "getData: $list")
+                _list.emit(list)
             }
-            _list.value = list
         }
     }
 }
