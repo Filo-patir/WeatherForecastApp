@@ -13,12 +13,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
+import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
 import filo.mamdouh.weatherforecast.features.search.main.adapter.RVAdapter
+import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment() , SearchLocationContract.View{
     lateinit var binding: FragmentSearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +41,7 @@ class SearchFragment : Fragment() {
         binding.floatingActionButton.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
         }
-        val adapter = RVAdapter()
+        val adapter = RVAdapter(this)
         binding.searchRV.apply {
             setAdapter(adapter)
         }
@@ -51,5 +53,13 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onItemClickListener(locationItem: LocationItem) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun onDeleteClicked(locationItem: LocationItem) {
+//        TODO("Not yet implemented")
     }
 }

@@ -84,5 +84,8 @@ class WeatherDetailsFragment : Fragment() {
         binding.locationImg.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_searchFragment)
         }
+        binding.menuImg.setOnClickListener {
+            TopSheetBehavior.from(binding.routeCaptionBottomSheet).state = TopSheetBehavior.STATE_EXPANDED
+        }
     }
 }

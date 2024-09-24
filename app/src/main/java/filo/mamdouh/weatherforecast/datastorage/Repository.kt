@@ -1,6 +1,7 @@
 package filo.mamdouh.weatherforecast.datastorage
 
 import filo.mamdouh.weatherforecast.datastorage.local.room.SavedLocationDataSource
+import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.ISharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSource
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val localDataSource: SavedLocationDataSource , private val networkDataSource: NetworkDataSource) :
+class Repository @Inject constructor(private val localDataSource: SavedLocationDataSource , private val networkDataSource: NetworkDataSource, private val sharedPreferencesHandler: ISharedPreferencesHandler) :
     IRepository {
     override suspend fun getCurrentWeather(lat: Double, lon: Double, unit: String): Response<CurrentWeather> {
         return networkDataSource.getCurrentWeather(lat, lon, unit)

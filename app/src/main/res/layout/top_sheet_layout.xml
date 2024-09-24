@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="50dp"
+    android:orientation="vertical"
+    app:layout_behavior="filo.mamdouh.weatherforecast.features.home.TopSheetBehavior">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:backgroundTint="@color/button_background_color"
+        android:text="@string/settings"
+        android:textColor="@color/white"
+        app:icon="@drawable/baseline_settings_24"
+        app:iconTint="@color/white" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:backgroundTint="@color/button_background_color"
+        android:text="@string/notifications"
+        android:textColor="@color/white"
+        app:icon="@drawable/baseline_notifications_24"
+        app:iconTint="@color/white" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:backgroundTint="@color/button_background_color"
+        android:text="@string/alarms"
+        android:textColor="@color/white"
+        app:icon="@drawable/baseline_access_alarm_24"
+        app:iconTint="@color/white" />
+</LinearLayout>

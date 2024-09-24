@@ -26,4 +26,7 @@
     <string name="pressure_unit">hPa</string>
     <string name="high_and_low">H:%.2f° | L:%.2f°</string>
     <string name="search_for_location">Search For Location</string>
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="alarms">Alarms</string>
 </resources>
