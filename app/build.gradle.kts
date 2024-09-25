@@ -53,6 +53,7 @@ dependencies {
     //Hilt
     implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.work.runtime.ktx)
     kapt(libs.hilt.android.compiler)
     //Retrofit
     implementation(libs.retrofit)
