@@ -142,14 +142,14 @@
                 app:layout_constraintStart_toStartOf="parent">
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/routeCaptionBottomSheet"
+            android:id="@+id/topSheetView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/top_sheet_background"
             app:layout_behavior="filo.mamdouh.weatherforecast.features.home.TopSheetBehavior">
 
             <include
-                android:id="@+id/top_sheet"
+                android:id="@+id/top_sheet_item"
                 layout="@layout/top_sheet_layout" />
         </androidx.core.widget.NestedScrollView>
                 <include

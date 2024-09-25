@@ -28,6 +28,12 @@ fun Long.toDay(timeZone: Int):String{
 fun Double.toMiles():Double{
     return this * 2.237
 }
+fun Double.toKelvin():Double{
+    return this - 273.15
+}
+fun Double.toFahrenheit():Double{
+    return this * 1.8 + 32
+}
 fun String.toDrawable() : Int {
     when(this){
         "01d" -> return R.drawable.sun

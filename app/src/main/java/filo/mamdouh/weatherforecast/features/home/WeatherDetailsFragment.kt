@@ -32,8 +32,8 @@ class WeatherDetailsFragment : Fragment() {
                 val bottomSheet = BottomSheetBehavior.from(binding.bottomSheet.standardBottomSheet)
                 if (BottomSheetBehavior.STATE_EXPANDED == bottomSheet.state)
                     bottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
-                else if (TopSheetBehavior.STATE_EXPANDED == TopSheetBehavior.from(binding.routeCaptionBottomSheet).state)
-                    TopSheetBehavior.from(binding.routeCaptionBottomSheet).state = TopSheetBehavior.STATE_COLLAPSED
+                else if (TopSheetBehavior.STATE_EXPANDED == TopSheetBehavior.from(binding.topSheetView).state)
+                    TopSheetBehavior.from(binding.topSheetView).state = TopSheetBehavior.STATE_COLLAPSED
                 else {
                     this.remove()
                     requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -87,8 +87,10 @@ class WeatherDetailsFragment : Fragment() {
             Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_searchFragment)
         }
         binding.menuImg.setOnClickListener {
-            TopSheetBehavior.from(binding.routeCaptionBottomSheet).state = TopSheetBehavior.STATE_EXPANDED
+            TopSheetBehavior.from(binding.topSheetView).state = TopSheetBehavior.STATE_EXPANDED
         }
-        binding.c
+        binding.topSheetItem.settingsBtn.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_settingsFragment)
+        }
     }
 }
