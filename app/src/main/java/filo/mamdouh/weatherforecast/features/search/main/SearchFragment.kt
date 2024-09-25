@@ -55,7 +55,7 @@ class SearchFragment : Fragment() , SearchLocationContract.View{
         }
     }
 
-    override fun onItemClickListener(locationItem: LocationItem) {
+    override fun onItemClickListener(lon: Double, lat: Double) {
 //        TODO("Not yet implemented")
     }
 

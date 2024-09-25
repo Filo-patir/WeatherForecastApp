@@ -9,7 +9,7 @@
     app:layout_behavior="filo.mamdouh.weatherforecast.features.home.TopSheetBehavior">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/settingsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -20,7 +20,7 @@
         app:iconTint="@color/white" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/notificationBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -31,7 +31,7 @@
         app:iconTint="@color/white" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/alarmsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"

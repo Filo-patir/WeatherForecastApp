@@ -24,6 +24,10 @@ fun Long.toDay(timeZone: Int):String{
     val dateTime = Instant.ofEpochSecond(this).atZone(ZoneOffset.ofTotalSeconds(timeZone)).toLocalDateTime()
     return dateTime.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.ENGLISH)
 }
+
+fun Double.toMiles():Double{
+    return this * 2.237
+}
 fun String.toDrawable() : Int {
     when(this){
         "01d" -> return R.drawable.sun

@@ -82,11 +82,11 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    Toast.makeText(context, "Searching for $s", Toast.LENGTH_SHORT).show()
                     viewModel.getSuggestions(s.toString())
                 }
 
             })
+            threshold = 2
             setAdapter(suggestions)
            showSoftInputOnFocus = true
         }
@@ -214,12 +214,12 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                         is NetworkResponse.Loading -> {}
                         is NetworkResponse.Success -> {
                             val data = it.data as Location
-                            Log.d("Filo", "setSuggestionListener: $data")
+                            Log.d("Filo", "setSuggestionListener: ${data.size}")
                             suggestions.clear()
                             data.forEach {
                                 suggestions.add("${it.name}, ${it.country}")
                             }
-                            suggestions.notifyDataSetChanged()
+                            binding.editTextText.refreshAutoCompleteResults()
                             binding.editTextText.setOnItemClickListener { _, _, position, _ ->
                                 viewModel.getLocation(data[position].lat, data[position].lon)
                             }

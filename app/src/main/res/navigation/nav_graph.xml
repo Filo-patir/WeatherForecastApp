@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_weatherDetailsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_weatherDetailsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -27,4 +30,9 @@
         android:name="filo.mamdouh.weatherforecast.features.search.map.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="filo.mamdouh.weatherforecast.features.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

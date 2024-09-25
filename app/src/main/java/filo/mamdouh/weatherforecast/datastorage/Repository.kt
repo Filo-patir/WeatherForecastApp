@@ -40,4 +40,5 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
     override fun deleteAllSavedLocations(): Flow<Int> {
         return localDataSource.deleteAll()
     }
+
 }
