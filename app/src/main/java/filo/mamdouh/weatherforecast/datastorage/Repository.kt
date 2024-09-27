@@ -9,6 +9,7 @@ import filo.mamdouh.weatherforecast.models.AlarmItem
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
+import filo.mamdouh.weatherforecast.models.SearchRoot
 import filo.mamdouh.weatherforecast.models.WeatherForecast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -42,7 +43,7 @@ class Repository @Inject constructor(
         return networkDataSource.getWeatherForecast(lat, lon, unit)
     }
 
-    override suspend fun getLocationByName(name: String, limit: Int): Response<Location> {
+    override suspend fun getLocationByName(name: String, limit: Int): Response<SearchRoot> {
         return networkDataSource.getLocationByName(name, limit)
     }
 

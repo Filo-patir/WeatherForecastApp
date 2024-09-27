@@ -10,6 +10,8 @@
         android:id="@+id/RV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
         tools:listitem="@layout/alarm_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

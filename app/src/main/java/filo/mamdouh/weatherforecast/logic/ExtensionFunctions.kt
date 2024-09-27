@@ -1,6 +1,8 @@
 package filo.mamdouh.weatherforecast.logic
 
 import filo.mamdouh.weatherforecast.R
+import filo.mamdouh.weatherforecast.models.LocationItem
+import filo.mamdouh.weatherforecast.models.SearchRootItem
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -24,6 +26,10 @@ fun Long.toHour(timeZone: Int): String {
 fun Long.toDay(timeZone: Int):String{
     val dateTime = Instant.ofEpochSecond(this).atZone(ZoneOffset.ofTotalSeconds(timeZone)).toLocalDateTime()
     return dateTime.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.ENGLISH)
+}
+
+fun SearchRootItem.toLocationItem(): LocationItem {
+    return LocationItem(0,this.country,this.latitude,this.longitude,this.name)
 }
 
 fun LocalDateTime.showTime():String{

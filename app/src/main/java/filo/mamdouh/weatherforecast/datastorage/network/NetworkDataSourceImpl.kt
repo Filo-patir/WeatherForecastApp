@@ -2,6 +2,7 @@ package filo.mamdouh.weatherforecast.datastorage.network
 
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
+import filo.mamdouh.weatherforecast.models.SearchRoot
 import filo.mamdouh.weatherforecast.models.WeatherForecast
 import retrofit2.Response
 
@@ -20,8 +21,8 @@ class NetworkDataSourceImpl : NetworkDataSource {
         units: String
     ): Response<WeatherForecast> = api.getWeatherForecast(lat,lon,units)
 
-    override suspend fun getLocationByName(name: String, limit : Int): Response<Location> {
-        return api.getLocationByName(name, limit)
+    override suspend fun getLocationByName(name: String, limit : Int): Response<SearchRoot> {
+        return api.getLocationByName("https://api.api-ninjas.com/v1/city/",name, limit)
     }
 
     override suspend fun getLocationByCoordinates(lat: Double, lon: Double): Response<Location> {

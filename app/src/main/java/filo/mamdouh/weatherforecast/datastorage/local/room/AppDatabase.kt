@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDao
 import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationsDao
+import filo.mamdouh.weatherforecast.models.AlarmItem
 import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlin.concurrent.Volatile
 
-@Database(entities = [LocationItem::class], version = 1)
+@Database(entities = [LocationItem::class , AlarmItem::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
         abstract val weatherDao: SavedLocationsDao
         abstract val alarmDao: AlarmDao

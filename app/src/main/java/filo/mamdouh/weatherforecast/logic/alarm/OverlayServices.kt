@@ -4,14 +4,12 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.databinding.OverlayLayoutBinding
 import filo.mamdouh.weatherforecast.models.AlarmItem
@@ -24,10 +22,9 @@ class OverlayServices : Service() {
     lateinit var mediaPlayer: MediaPlayer
     lateinit var alarmItem: AlarmItem
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         alarmItem = intent?.getParcelableExtra("alarmItem", AlarmItem::class.java) ?: AlarmItem(
-            LocalDateTime.now(), "Alarm", false,false,0)
+            LocalDateTime.now(), "Alarm", false,0)
         val binding = OverlayLayoutBinding.inflate(LayoutInflater.from(this))
         overlayView = binding.root
         val layoutParams = WindowManager.LayoutParams(
@@ -51,7 +48,7 @@ class OverlayServices : Service() {
             stopSelf()
         }
 
-        overlayView.setOnTouchListener { v, event -> // Close overlay on touch outside
+        overlayView.setOnTouchListener { _, _ -> // Close overlay on touch outside
             stopSelf()
             true
         }

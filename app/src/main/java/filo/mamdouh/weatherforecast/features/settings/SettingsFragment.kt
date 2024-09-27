@@ -36,28 +36,6 @@ class SettingsFragment : Fragment() {
         setUpWinSpeedAnimation()
         setUpTempAnimation()
         setUpLangAnimation()
-        binding.appNotificationBtn.apply {
-            setOnClickListener {
-                    animate().setStartDelay(500).translationX(50f).alpha(0f)
-                        .withStartAction {
-                            binding.appNotificationBtn2.animate().setStartDelay(300).translationX(0f).alpha(1f).setDuration(700)
-                                .withStartAction { binding.appNotificationBtn2.visibility = View.VISIBLE }
-                        }.setDuration(700).withEndAction {
-                            visibility = View.GONE
-                        }.start()
-            }
-        }
-        binding.appNotificationBtn2.apply {
-            setOnClickListener {
-                animate().setStartDelay(500).translationX(-50f).alpha(0f)
-                    .withStartAction {
-                        binding.appNotificationBtn.animate().setStartDelay(300).translationX(0f).alpha(1f).setDuration(700)
-                            .withStartAction { binding.appNotificationBtn.visibility = View.VISIBLE }
-                    }.setDuration(700).withEndAction {
-                        visibility = View.GONE
-                    }.start()
-            }
-        }
     }
 
     private fun setUpLocationAnimation() {

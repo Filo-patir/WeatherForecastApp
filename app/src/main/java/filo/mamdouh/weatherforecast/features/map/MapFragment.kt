@@ -24,8 +24,13 @@ import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.dialogs.LocationConfirmationDialog
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
+import filo.mamdouh.weatherforecast.models.SearchRoot
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -47,6 +52,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
     private lateinit var marker: Marker
     private var location: LocationItem? = null
     private lateinit var suggestions: ArrayAdapter<String>
+    private val searchQueryFlow = MutableSharedFlow<String>()
 
     private val viewModel by hiltNavGraphViewModels<MapViewModel>(R.id.nav_graph)
 
@@ -58,6 +64,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         return binding.root
     }
 
+    @OptIn(FlowPreview::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Configuration.getInstance().load(
@@ -82,13 +89,21 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    viewModel.getSuggestions(s.toString())
+                    lifecycleScope.launch {
+                        searchQueryFlow.emit(s.toString())
+                    }
                 }
 
             })
             threshold = 2
             setAdapter(suggestions)
            showSoftInputOnFocus = true
+        }
+        lifecycleScope.launch {
+            searchQueryFlow.debounce(1000).distinctUntilChanged().collect{
+                if(it.isNotEmpty())
+                    viewModel.getSuggestions(it)
+            }
         }
         setSuggestionListener()
         mapSetup()
@@ -213,7 +228,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                         is NetworkResponse.Failure -> {Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()}
                         is NetworkResponse.Loading -> {}
                         is NetworkResponse.Success -> {
-                            val data = it.data as Location
+                            val data = it.data as SearchRoot
                             Log.d("Filo", "setSuggestionListener: ${data.size}")
                             suggestions.clear()
                             data.forEach {
@@ -221,7 +236,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                             }
                             binding.editTextText.refreshAutoCompleteResults()
                             binding.editTextText.setOnItemClickListener { _, _, position, _ ->
-                                viewModel.getLocation(data[position].lat, data[position].lon)
+                                viewModel.getLocation(data[position].latitude, data[position].longitude)
                             }
                         }
                     }

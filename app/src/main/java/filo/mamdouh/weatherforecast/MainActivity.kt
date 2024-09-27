@@ -12,9 +12,6 @@ import androidx.core.location.LocationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dagger.hilt.android.AndroidEntryPoint
-import filo.mamdouh.weatherforecast.logic.alarm.AlarmSchedulerImpl
-import filo.mamdouh.weatherforecast.models.AlarmItem
-import java.time.LocalDateTime
 
 
 @AndroidEntryPoint
@@ -29,11 +26,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val alarmScheduler = AlarmSchedulerImpl(this)
-        alarmScheduler.scheduleAlarm(AlarmItem(LocalDateTime.now().plusSeconds(10), "Test",
-            flag = true,
-            result = true
-        ))
+//        val alarmScheduler = AlarmSchedulerImpl(this)
+//        alarmScheduler.scheduleAlarm(AlarmItem(LocalDateTime.now().plusSeconds(10), "Test", true,))
     }
     private fun checkPermissions() : Boolean {
         val finePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
