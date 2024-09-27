@@ -12,7 +12,7 @@ import androidx.core.location.LocationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dagger.hilt.android.AndroidEntryPoint
-import filo.mamdouh.weatherforecast.features.alarm.AlarmSchedulerImpl
+import filo.mamdouh.weatherforecast.logic.alarm.AlarmSchedulerImpl
 import filo.mamdouh.weatherforecast.models.AlarmItem
 import java.time.LocalDateTime
 

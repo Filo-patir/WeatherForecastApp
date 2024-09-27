@@ -1,9 +1,11 @@
 package filo.mamdouh.weatherforecast.datastorage
 
 import filo.mamdouh.weatherforecast.datastorage.local.objectbox.Boxes
-import filo.mamdouh.weatherforecast.datastorage.local.room.SavedLocationDataSource
+import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSource
+import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSource
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.ISharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSource
+import filo.mamdouh.weatherforecast.models.AlarmItem
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
@@ -13,9 +15,16 @@ import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val localDataSource: SavedLocationDataSource , private val networkDataSource: NetworkDataSource, private val sharedPreferencesHandler: ISharedPreferencesHandler) :
+class Repository @Inject constructor(
+    private val localDataSource: SavedLocationDataSource,
+    private val networkDataSource: NetworkDataSource,
+    private val sharedPreferencesHandler: ISharedPreferencesHandler,
+    private val alarmDataSource: AlarmDataSource
+) :
     IRepository {
         private val boxes = Boxes()
+
+    //  * Settings Functions
     override fun saveSettings(name: String, value: String) {
         sharedPreferencesHandler.save(name, value)
     }
@@ -24,6 +33,8 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
         return sharedPreferencesHandler.get(name)
     }
 
+
+    //  * Api Functions
     override suspend fun getCurrentWeather(lat: Double, lon: Double, unit: String): Response<CurrentWeather> {
         return networkDataSource.getCurrentWeather(lat, lon, unit)
     }
@@ -39,6 +50,9 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
         return networkDataSource.getLocationByCoordinates(lat, lon)
     }
 
+
+
+    //  * SavedLocation Functions
     override fun getSavedLocations(): Flow<List<LocationItem>> {
         return localDataSource.getAll()
     }
@@ -52,6 +66,8 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
         return localDataSource.deleteAll()
     }
 
+
+    //  * ObjectBox Functions
     override fun getCurrentWeatherFromLocal(): Flow<List<CurrentWeather>> {
         return boxes.getCurrentWeather()
     }
@@ -64,6 +80,20 @@ class Repository @Inject constructor(private val localDataSource: SavedLocationD
     }
     override suspend fun saveWeeklyForecast(weatherForecast: WeatherForecast, dispatcher: CoroutineDispatcher) {
         boxes.putWeatherForecast(weatherForecast, dispatcher)
+    }
+
+
+    //  * Alarm Functions
+    override fun getAlarm(): Flow<List<AlarmItem>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertAlarm(alarmItem: AlarmItem) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAlarm(alarmItem: AlarmItem) {
+        TODO("Not yet implemented")
     }
 
 }

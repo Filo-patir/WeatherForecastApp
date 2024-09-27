@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.alarm
+package filo.mamdouh.weatherforecast.logic.alarm
 
 import filo.mamdouh.weatherforecast.models.AlarmItem
 

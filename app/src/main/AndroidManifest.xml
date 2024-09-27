@@ -28,9 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".features.alarm.AlarmReceiver"
+        <receiver android:name=".logic.alarm.AlarmReceiver"
             android:enabled="true"/>
-        <service android:name=".features.alarm.OverlayServices" />
+        <service android:name=".logic.alarm.OverlayServices" />
     </application>
 
 </manifest>

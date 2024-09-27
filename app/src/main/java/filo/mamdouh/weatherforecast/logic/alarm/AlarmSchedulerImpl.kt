@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.alarm
+package filo.mamdouh.weatherforecast.logic.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent

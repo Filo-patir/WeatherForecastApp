@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.datastorage.local.room
+package filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation
 
 import androidx.room.Dao
 import androidx.room.Delete

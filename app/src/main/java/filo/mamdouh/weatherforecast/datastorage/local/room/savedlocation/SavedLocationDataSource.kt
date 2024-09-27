@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.datastorage.local.room
+package filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation
 
 import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlinx.coroutines.flow.Flow

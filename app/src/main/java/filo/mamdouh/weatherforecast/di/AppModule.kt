@@ -8,8 +8,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import filo.mamdouh.weatherforecast.datastorage.IRepository
 import filo.mamdouh.weatherforecast.datastorage.Repository
-import filo.mamdouh.weatherforecast.datastorage.local.room.SavedLocationDataSource
-import filo.mamdouh.weatherforecast.datastorage.local.room.SavedLocationDataSourceImpl
+import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSource
+import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSourceImpl
+import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSource
+import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSourceImpl
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.ISharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.SharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSource
@@ -21,11 +23,12 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideRepository(savedLocationDataSource: SavedLocationDataSource, networkDataSource: NetworkDataSource, sharedPreferencesHandler: ISharedPreferencesHandler): IRepository {
+    fun provideRepository(savedLocationDataSource: SavedLocationDataSource, networkDataSource: NetworkDataSource, sharedPreferencesHandler: ISharedPreferencesHandler, alarmDataSource: AlarmDataSource): IRepository {
         return Repository(
             savedLocationDataSource,
             networkDataSource,
-            sharedPreferencesHandler
+            sharedPreferencesHandler,
+            alarmDataSource
         )
     }
     @Provides
@@ -45,5 +48,11 @@ class AppModule {
     @Singleton
     fun provideSharedPreferencesHandler(@ApplicationContext context: Context): ISharedPreferencesHandler {
         return SharedPreferencesHandler(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAlarmDataSource(@ApplicationContext context: Context): AlarmDataSource {
+        return AlarmDataSourceImpl(context)
     }
 }
