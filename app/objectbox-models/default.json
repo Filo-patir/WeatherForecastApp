@@ -1,0 +1,141 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:4839543450820253886",
+      "lastPropertyId": "15:1011985649701920366",
+      "name": "CurrentWeather",
+      "properties": [
+        {
+          "id": "1:4103825680632674860",
+          "name": "uid",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2495636497731449952",
+          "name": "base",
+          "type": 9
+        },
+        {
+          "id": "3:1326828709160166022",
+          "name": "clouds",
+          "type": 9
+        },
+        {
+          "id": "4:8169605917656810719",
+          "name": "cod",
+          "type": 5
+        },
+        {
+          "id": "5:5063787856639031588",
+          "name": "coord",
+          "type": 9
+        },
+        {
+          "id": "6:8054141829218413510",
+          "name": "dt",
+          "type": 5
+        },
+        {
+          "id": "7:4434866835805635527",
+          "name": "id",
+          "type": 5
+        },
+        {
+          "id": "8:7769519684573605376",
+          "name": "main",
+          "type": 9
+        },
+        {
+          "id": "9:2663368199957221974",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "10:6186084049095894709",
+          "name": "sys",
+          "type": 9
+        },
+        {
+          "id": "11:2193128355191846928",
+          "name": "timezone",
+          "type": 5
+        },
+        {
+          "id": "12:9134737802361661764",
+          "name": "visibility",
+          "type": 5
+        },
+        {
+          "id": "13:8400904174144386736",
+          "name": "weather",
+          "type": 9
+        },
+        {
+          "id": "14:5138913654463265340",
+          "name": "wind",
+          "type": 9
+        },
+        {
+          "id": "15:1011985649701920366",
+          "name": "message",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:4433588703109635531",
+      "lastPropertyId": "6:4272431613982791106",
+      "name": "WeatherForecast",
+      "properties": [
+        {
+          "id": "1:3903316876948789074",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6200418397824269815",
+          "name": "city",
+          "type": 9
+        },
+        {
+          "id": "3:4491728078561101615",
+          "name": "cnt",
+          "type": 5
+        },
+        {
+          "id": "4:6212748242854285223",
+          "name": "cod",
+          "type": 9
+        },
+        {
+          "id": "5:5652983083455230194",
+          "name": "list",
+          "type": 9
+        },
+        {
+          "id": "6:4272431613982791106",
+          "name": "message",
+          "type": 5
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:4433588703109635531",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

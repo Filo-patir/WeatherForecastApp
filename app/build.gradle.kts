@@ -46,6 +46,8 @@ android {
 }
 
 dependencies {
+    // ObjectBox
+    implementation(libs.objectbox.kotlin)
     //lifecycle for stateflow
     implementation(libs.androidx.lifecycle.runtime.ktx)
     //OSM
