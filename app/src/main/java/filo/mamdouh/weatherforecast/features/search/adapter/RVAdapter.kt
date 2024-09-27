@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.search.main.adapter
+package filo.mamdouh.weatherforecast.features.search.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,7 +12,9 @@ import filo.mamdouh.weatherforecast.databinding.SavedLocationItemBinding
 import filo.mamdouh.weatherforecast.logic.toDrawable
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 
-class RVAdapter(private val listener: SearchLocationContract.View) : ListAdapter<CurrentWeather, RVAdapter.ViewHolder>(SavedLocationDiffUtils()) {
+class RVAdapter(private val listener: SearchLocationContract.View) : ListAdapter<CurrentWeather, RVAdapter.ViewHolder>(
+    SavedLocationDiffUtils()
+) {
     private lateinit var context : Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context

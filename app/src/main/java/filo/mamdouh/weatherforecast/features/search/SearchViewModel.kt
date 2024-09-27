@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.search.main
+package filo.mamdouh.weatherforecast.features.search
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

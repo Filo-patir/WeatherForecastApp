@@ -13,7 +13,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "filo.mamdouh.weatherforecast"
-        minSdk = 29
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

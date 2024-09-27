@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.search.main.adapter
+package filo.mamdouh.weatherforecast.features.search.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import filo.mamdouh.weatherforecast.models.CurrentWeather

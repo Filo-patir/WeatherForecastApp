@@ -2,7 +2,6 @@ package filo.mamdouh.weatherforecast
 
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +16,7 @@ import filo.mamdouh.weatherforecast.features.alarm.AlarmSchedulerImpl
 import filo.mamdouh.weatherforecast.models.AlarmItem
 import java.time.LocalDateTime
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,17 +30,22 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val alarmScheduler = AlarmSchedulerImpl(this)
-        alarmScheduler.scheduleAlarm(AlarmItem(LocalDateTime.now().plusSeconds(20), "Test", true))
+        alarmScheduler.scheduleAlarm(AlarmItem(LocalDateTime.now().plusSeconds(10), "Test",
+            flag = true,
+            result = true
+        ))
     }
     private fun checkPermissions() : Boolean {
         val finePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
         val coarsePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-        val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-        return finePermission || coarsePermission && notificationPermission
+        val notificationPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+        val overlayPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.SYSTEM_ALERT_WINDOW) == PackageManager.PERMISSION_GRANTED
+//        val intent = Intent(
+//            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//            Uri.parse("package:$packageName")
+//        )
+//        startActivity(intent, null)
+        return finePermission || coarsePermission && notificationPermission && overlayPermission
     }
 
     override fun onStart() {
@@ -55,13 +60,14 @@ class MainActivity : AppCompatActivity() {
                     arrayOf(
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) android.Manifest.permission.POST_NOTIFICATIONS else ""
+                        android.Manifest.permission.POST_NOTIFICATIONS,
+                        android.Manifest.permission.SYSTEM_ALERT_WINDOW
                     ),
                     1
                 )
             }
         } else {
-            ActivityCompat.requestPermissions(this,  arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION , if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) android.Manifest.permission.POST_NOTIFICATIONS else ""), 1)
+            ActivityCompat.requestPermissions(this,  arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION , android.Manifest.permission.POST_NOTIFICATIONS, android.Manifest.permission.SYSTEM_ALERT_WINDOW), 1)
         }
     }
 

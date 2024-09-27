@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.search.map
+package filo.mamdouh.weatherforecast.features.map
 
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle

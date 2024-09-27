@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.search.main
+package filo.mamdouh.weatherforecast.features.search
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
-import filo.mamdouh.weatherforecast.features.search.main.adapter.RVAdapter
+import filo.mamdouh.weatherforecast.features.search.adapter.RVAdapter
 import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlinx.coroutines.launch
 
