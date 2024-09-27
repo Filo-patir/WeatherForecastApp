@@ -2,6 +2,7 @@ package filo.mamdouh.weatherforecast.logic
 
 import filo.mamdouh.weatherforecast.R
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
@@ -23,6 +24,10 @@ fun Long.toHour(timeZone: Int): String {
 fun Long.toDay(timeZone: Int):String{
     val dateTime = Instant.ofEpochSecond(this).atZone(ZoneOffset.ofTotalSeconds(timeZone)).toLocalDateTime()
     return dateTime.dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.ENGLISH)
+}
+
+fun LocalDateTime.showTime():String{
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a").format(this)
 }
 
 fun Double.toMiles():Double{
