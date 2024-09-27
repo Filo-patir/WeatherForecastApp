@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout">
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <RadioGroup
@@ -58,13 +58,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="-115dp"
         android:background="@drawable/dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/group4"
         app:layout_constraintEnd_toEndOf="@+id/group4"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/group4"
-        app:layout_constraintBottom_toBottomOf="@+id/group4"
-        android:layout_marginBottom="-115dp"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="@id/group4">
 
         <RadioButton
             android:id="@+id/englishRB"
@@ -159,13 +159,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="-115dp"
         android:background="@drawable/dropdown_background"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/group3"
         app:layout_constraintEnd_toEndOf="@+id/group3"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/group3"
-        app:layout_constraintBottom_toBottomOf="@+id/group3"
-        android:layout_marginBottom="-115dp"
-        android:visibility="gone">
+        app:layout_constraintStart_toStartOf="@+id/group3">
 
         <RadioButton
             android:id="@+id/meterPerSecondRB"
@@ -206,8 +206,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:padding="10dp"
         android:text="@string/temperature_unit"
@@ -224,13 +224,13 @@
         android:layout_gravity="center"
         android:layout_marginStart="50dp"
         android:layout_weight="1"
-        tools:text="Celcius(°C)"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/tempBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/textView5"
+        tools:text="Celcius(°C)" />
 
     <ImageView
         android:id="@+id/tempBtn"
@@ -368,7 +368,6 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/group2"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

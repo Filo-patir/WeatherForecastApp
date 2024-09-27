@@ -4,17 +4,14 @@ import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.models.AlarmItem
 
 class AlarmReceiver : BroadcastReceiver() {
     private lateinit var alarmItem : AlarmItem
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onReceive(context: Context, intent: Intent) {
         alarmItem = intent.getParcelableExtra("alarmItem", AlarmItem::class.java) ?: return
         if (alarmItem.flag){

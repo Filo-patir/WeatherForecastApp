@@ -14,13 +14,14 @@ import java.time.LocalDateTime
  */
 @Entity(primaryKeys = ["id"], tableName = "alarm_table")
 @TypeConverters(TimeConverter::class)
-data class AlarmItem( val time: LocalDateTime , val message: String, val flag : Boolean , val id: Long = System.currentTimeMillis()) : Parcelable {
+data class AlarmItem(var time: LocalDateTime , var message: String, var flag : Boolean , val id: Long = System.currentTimeMillis()) : Parcelable {
     constructor(parcel: Parcel) : this(
         Gson().fromJson(parcel.readString().toString(), LocalDateTime::class.java),
         parcel.readString().toString(),
-        parcel.readByte() == 1.toByte(),
-            parcel.readLong()
-    )
+        parcel.readByte() != 0.toByte(),
+        parcel.readLong()
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(Gson().toJson(time))

@@ -42,4 +42,6 @@
     <string name="wind_speed">Wind Speed</string>
     <string name="language">Language</string>
     <string name="location">Location</string>
+    <string name="notfication_only">Notfication Only</string>
+    <string name="confirm">Confirm</string>
 </resources>

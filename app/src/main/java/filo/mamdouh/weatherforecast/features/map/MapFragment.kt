@@ -22,6 +22,7 @@ import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentMapBinding
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.dialogs.LocationConfirmationDialog
+import filo.mamdouh.weatherforecast.logic.toLocationItem
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
 import filo.mamdouh.weatherforecast.models.SearchRoot
@@ -101,6 +102,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         }
         lifecycleScope.launch {
             searchQueryFlow.debounce(1000).distinctUntilChanged().collect{
+                Log.d("Filo", "onViewCreated: $it")
                 if(it.isNotEmpty())
                     viewModel.getSuggestions(it)
             }
@@ -113,15 +115,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                     when(it){
                         is NetworkResponse.Failure -> {Toast.makeText(context, it.errorMessage, Toast.LENGTH_SHORT).show()}
                         is NetworkResponse.Loading -> {}
-                        is NetworkResponse.Success -> {
-                            val data = it.data as Location
-                            if (data.isEmpty())
-                                mMap.overlays.remove(marker)
-                            else {
-                                location = data[0]
-                                setMarker(location!!)
-                            }
-                        }
+                        is NetworkResponse.Success -> onSuccess(it.data)
                     }
                 }
             }
@@ -219,6 +213,26 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         } else {
             return false
         }
+    }
+    private fun onSuccess(data : Any?){
+        if (data is Location) {
+            if (data.isEmpty())
+                mMap.overlays.remove(marker)
+            else {
+                location = data[0]
+                setMarker(location!!)
+            }
+        }
+        else {
+            data as SearchRoot
+            if (data.isEmpty())
+                mMap.overlays.remove(marker)
+            else {
+                location = data[0].toLocationItem()
+                setMarker(location!!)
+            }
+        }
+
     }
     private fun setSuggestionListener(){
         viewLifecycleOwner.lifecycleScope.launch {

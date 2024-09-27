@@ -69,15 +69,8 @@ class Repository @Inject constructor(
 
 
     //  * ObjectBox Functions
-    override fun getCurrentWeatherFromLocal(): Flow<List<CurrentWeather>> {
-        return boxes.getCurrentWeather()
-    }
-
     override fun getWeeklyForecastFromLocal(): Flow<List<WeatherForecast>> {
         return boxes.getWeatherForecast()
-    }
-    override suspend fun saveCurrentWeather(currentWeather: CurrentWeather, dispatcher: CoroutineDispatcher) {
-        boxes.putCurrentWeather(currentWeather, dispatcher)
     }
     override suspend fun saveWeeklyForecast(weatherForecast: WeatherForecast, dispatcher: CoroutineDispatcher) {
         boxes.putWeatherForecast(weatherForecast, dispatcher)
@@ -86,15 +79,15 @@ class Repository @Inject constructor(
 
     //  * Alarm Functions
     override fun getAlarm(): Flow<List<AlarmItem>> {
-        TODO("Not yet implemented")
+        return alarmDataSource.getAllAlarms()
     }
 
     override suspend fun insertAlarm(alarmItem: AlarmItem) {
-        TODO("Not yet implemented")
+        alarmDataSource.insertAlarm(alarmItem)
     }
 
     override suspend fun deleteAlarm(alarmItem: AlarmItem) {
-        TODO("Not yet implemented")
+        alarmDataSource.deleteAlarm(alarmItem)
     }
 
 }

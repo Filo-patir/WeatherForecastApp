@@ -10,19 +10,24 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.R
+import filo.mamdouh.weatherforecast.contracts.AddAlarmListener
 import filo.mamdouh.weatherforecast.contracts.AlarmListener
 import filo.mamdouh.weatherforecast.databinding.FragmentAlarmBinding
 import filo.mamdouh.weatherforecast.features.alarm.adapter.AlarmAdapter
+import filo.mamdouh.weatherforecast.features.dialogs.AddAlarmDialog
+import filo.mamdouh.weatherforecast.logic.alarm.AlarmSchedulerImpl
 import filo.mamdouh.weatherforecast.models.AlarmItem
 import kotlinx.coroutines.launch
 
-class AlarmFragment : Fragment(), AlarmListener{
+@AndroidEntryPoint
+class AlarmFragment : Fragment(), AlarmListener , AddAlarmListener {
     lateinit var binding: FragmentAlarmBinding
+    private val viewModel by hiltNavGraphViewModels<AlarmViewModel>(R.id.nav_graph)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -35,7 +40,6 @@ class AlarmFragment : Fragment(), AlarmListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel by hiltNavGraphViewModels<AlarmViewModel>(R.id.nav_graph)
         val adapter = AlarmAdapter(this)
         binding.apply {
             RV.adapter = adapter
@@ -52,14 +56,21 @@ class AlarmFragment : Fragment(), AlarmListener{
     }
 
     private fun addAlarm() {
-        TODO("Not yet implemented")
+        AddAlarmDialog.showDialog(activity,activity?.supportFragmentManager,this)
     }
 
     override fun onRemoveCLicked(alarmItem: AlarmItem) {
-        TODO("Not yet implemented")
+        context?.let { AlarmSchedulerImpl(it).cancelAlarm(alarmItem) }
+        viewModel.removeAlarm(alarmItem)
     }
 
     override fun onEditClicked(alarmItem: AlarmItem) {
-        TODO("Not yet implemented")
+        AddAlarmDialog.showDialog(activity,activity?.supportFragmentManager,this, alarmItem)
     }
+
+    override fun onAddAlarmClicked(alarmItem: AlarmItem) {
+        context?.let { AlarmSchedulerImpl(it).scheduleAlarm(alarmItem) }
+        viewModel.saveAlarm(alarmItem)
+    }
+
 }

@@ -25,9 +25,8 @@ class AlarmAdapter (private val listener : AlarmListener): ListAdapter<AlarmItem
         holder.binding.apply {
             alarmTitle.text = item.message
             alarmDate.text = item.time.showTime()
-            deleteBtn.setOnClickListener {
-                listener.onRemoveCLicked(item)
-            }
+            alarmType.text = if (item.flag) "Alarm" else "Notification"
+            deleteBtn.setOnClickListener { listener.onRemoveCLicked(item) }
             editBtn.setOnClickListener { listener.onEditClicked(item) }
         }
     }

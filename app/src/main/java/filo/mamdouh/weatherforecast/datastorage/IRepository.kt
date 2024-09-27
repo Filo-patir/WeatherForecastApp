@@ -25,9 +25,7 @@ interface IRepository {
     fun deleteSavedLocation(savedLocations: LocationItem): Flow<Int>
     fun deleteAllSavedLocations(): Flow<Int>
     //ObjectBox Functions
-    fun getCurrentWeatherFromLocal(): Flow<List<CurrentWeather>>
     fun getWeeklyForecastFromLocal(): Flow<List<WeatherForecast>>
-    suspend fun saveCurrentWeather(currentWeather: CurrentWeather, dispatcher: CoroutineDispatcher)
     suspend fun saveWeeklyForecast(weatherForecast: WeatherForecast, dispatcher: CoroutineDispatcher)
     //Alarm Functions
     fun getAlarm(): Flow<List<AlarmItem>>

@@ -92,5 +92,11 @@ class WeatherDetailsFragment : Fragment() {
         binding.topSheetItem.settingsBtn.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_settingsFragment)
         }
+        binding.topSheetItem.alarmsBtn.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_alarmFragment)
+        }
+        binding.topSheetItem.notificationBtn.setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_notificationFragment)
+        }
     }
 }
