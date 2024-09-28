@@ -1,24 +1,27 @@
 package filo.mamdouh.weatherforecast
 
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import filo.mamdouh.weatherforecast.contracts.SettingsUpdater
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SettingsUpdater {
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Filo", "onCreate: ${BuildConfig.API_KEY}")
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -26,8 +29,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-//        val alarmScheduler = AlarmSchedulerImpl(this)
-//        alarmScheduler.scheduleAlarm(AlarmItem(LocalDateTime.now().plusSeconds(10), "Test", true,))
+        lifecycleScope.launch {
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED){
+                viewModel.localization.collect{
+                    checkAndChangLocality(it)
+                }
+            }
+        }
     }
     private fun checkPermissions() : Boolean {
         val finePermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -39,31 +47,10 @@ class MainActivity : AppCompatActivity() {
 //            Uri.parse("package:$packageName")
 //        )
 //        startActivity(intent, null)
-        return finePermission || coarsePermission && notificationPermission && overlayPermission
+        return (finePermission || coarsePermission) && notificationPermission && overlayPermission
     }
 
-    override fun onStart() {
-        super.onStart()
-        if(checkPermissions()){
-            if(LocationManagerCompat.isLocationEnabled(getSystemService(LOCATION_SERVICE) as LocationManager))
-                Log.d("Filo", "onStart: Location Enabled")
-            else {
-                Log.d("Filo", "onStart: Location Disabled")
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                        android.Manifest.permission.POST_NOTIFICATIONS,
-                        android.Manifest.permission.SYSTEM_ALERT_WINDOW
-                    ),
-                    1
-                )
-            }
-        } else {
-            ActivityCompat.requestPermissions(this,  arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION , android.Manifest.permission.POST_NOTIFICATIONS, android.Manifest.permission.SYSTEM_ALERT_WINDOW), 1)
-        }
-    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -79,4 +66,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+    override fun checkAndChangLocality(languageCode: String)
+    {
+        val locale = resources.configuration.locales[0]
+        Log.d("Filo", "checkAndChangLocality: ${locale.language != languageCode}")
+        if(locale.language != languageCode)
+        {
+            val newLocale = Locale(languageCode)
+            Locale.setDefault(newLocale)
+            val config = resources.configuration
+            config.setLocale(newLocale)
+            config.setLayoutDirection(newLocale)
+            resources.updateConfiguration(config,resources.displayMetrics)
+            recreate()
+        }
+    }
+
 }

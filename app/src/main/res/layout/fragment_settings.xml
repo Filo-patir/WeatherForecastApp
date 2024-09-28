@@ -53,41 +53,66 @@
         app:layout_constraintStart_toStartOf="@+id/textView18"
         app:layout_constraintTop_toTopOf="@+id/textView18" />
 
-    <RadioGroup
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/languageRadioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="-115dp"
         android:background="@drawable/dropdown_background"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/group4"
         app:layout_constraintEnd_toEndOf="@+id/group4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/group4">
 
-        <RadioButton
-            android:id="@+id/englishRB"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
-            android:drawableTint="@color/cloudy_background_color"
-            android:text="@string/english"
-            android:textColor="@color/white" />
+        <RadioGroup
+            android:id="@+id/radioGroup2"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/langOnBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/arabicRB"
-            android:layout_width="match_parent"
+            <RadioButton
+                android:id="@+id/englishRB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:buttonTint="@color/transparent"
+                android:text="@string/english"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/arabicRB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:buttonTint="@color/transparent"
+                android:text="@string/arabic"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/langOnBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
-            android:text="@string/arabic"
-            android:textColor="@color/white" />
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioGroup2"
+            app:srcCompat="@android:drawable/radiobutton_off_background"
+            app:tint="@color/cloudy_background_color" />
 
-    </RadioGroup>
+        <ImageView
+            android:id="@+id/langOffBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/radioGroup2"
+            app:layout_constraintEnd_toEndOf="@+id/langOnBtn"
+            app:srcCompat="@android:drawable/radiobutton_off_background" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group4"

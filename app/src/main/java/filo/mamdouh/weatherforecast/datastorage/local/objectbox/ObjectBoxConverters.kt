@@ -1,7 +1,7 @@
 package filo.mamdouh.weatherforecast.datastorage.local.objectbox
 
 import com.google.gson.Gson
-import filo.mamdouh.weatherforecast.models.City
+import filo.mamdouh.weatherforecast.models.CachedCompositeKey
 import filo.mamdouh.weatherforecast.models.Clouds
 import filo.mamdouh.weatherforecast.models.Coord
 import filo.mamdouh.weatherforecast.models.ForecastItems
@@ -76,12 +76,12 @@ class ForeCastItemConverter : PropertyConverter<List<ForecastItems>, String> {
     }
 }
 
-class CityConverter : PropertyConverter<City, String>{
-    override fun convertToEntityProperty(databaseValue: String?): City {
-        return Gson().fromJson(databaseValue, City::class.java)
+class CachedCompositeKeyConverter : PropertyConverter<CachedCompositeKey, String>{
+    override fun convertToEntityProperty(databaseValue: String?): CachedCompositeKey {
+        return Gson().fromJson(databaseValue, CachedCompositeKey::class.java)
     }
 
-    override fun convertToDatabaseValue(entityProperty: City?): String {
+    override fun convertToDatabaseValue(entityProperty: CachedCompositeKey?): String {
         return Gson().toJson(entityProperty)
     }
 }

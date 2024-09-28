@@ -4,12 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.databinding.FragmentSettingsBinding
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
-    private var notiFlag: Boolean = false
+    private val viewModel by viewModels<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +36,28 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpViews()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.local.collect{
+                    binding.apply {
+                        arabicRB.isChecked = !it
+                        englishRB.isChecked = it
+                    }
+                }
+            }
+        }
+        binding.apply {
+            arabicRB.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    langSetup(false)
+                }
+            }
+            englishRB.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    langSetup(true)
+                }
+            }
+        }
 
     }
 
@@ -126,5 +156,17 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun langSetup(flag: Boolean){
+        if (flag){
+            binding.englishRB.isChecked = true
+            viewModel.setLocalization("en")
+        }
+        else{
+            binding.arabicRB.isChecked = false
+            viewModel.setLocalization("ar")
+        }
+        Toast.makeText(context, "Please Restart the app to apply the changes", Toast.LENGTH_SHORT).show()
     }
 }

@@ -8,7 +8,9 @@ import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,36 +24,11 @@ class WeatherDetailsViewModel @Inject constructor (private val repo: IRepository
     val weatherForecast = _weatherForecast.onStart { getData() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(3600000L),NetworkResponse.Loading)
 
     private fun getData() {
-        getWeatherData()
-        getWeatherForecast()
-    }
-    private fun getWeatherData(){
         viewModelScope.launch(dispatcher) {
-            val value = repo.getCurrentWeather(31.199004,29.894378,"metric")
-            if (value.isSuccessful)
-            {
-                if (value.body()?.cod == 200 )
-                    _currentWeather.value = NetworkResponse.Success(value.body())
-                else
-                    _currentWeather.value = NetworkResponse.Failure(value.body()?.message ?: "Error")
+            val location = repo.getSavedLocations().map { location -> location.filter { it.home } }.single()[0]
+            repo.getWeeklyForecastFromLocal().map { cached -> cached.filter { it.key.city.name == location.name} }.collect{
+                _currentWeather.value = NetworkResponse.Success(it)
             }
-            else
-                _currentWeather.value = NetworkResponse.Failure(value.message())
-        }
-    }
-    private fun getWeatherForecast(){
-        viewModelScope.launch(dispatcher){
-            val value = repo.getWeeklyForecast(31.199004,29.894378,"metric")
-            if (value.isSuccessful)
-            {
-                try {
-                        _weatherForecast.value = NetworkResponse.Success(value.body())
-                } catch (e: Exception) {
-                    _weatherForecast.value = NetworkResponse.Failure(e.message ?: "Error")
-                }
-            }
-            else
-                _weatherForecast.value = NetworkResponse.Failure(value.message())
         }
     }
 }

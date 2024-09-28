@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_searchFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_weatherDetailsFragment2"
+            app:destination="@id/weatherDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"

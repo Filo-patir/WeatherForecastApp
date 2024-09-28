@@ -22,6 +22,7 @@ import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentMapBinding
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.dialogs.LocationConfirmationDialog
+import filo.mamdouh.weatherforecast.logic.NetworkUtils
 import filo.mamdouh.weatherforecast.logic.toLocationItem
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
@@ -75,7 +76,7 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
         mMap = binding.osmmap
         suggestions = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, emptyList())
         binding.editTextText.apply {
-            setOnKeyListener{ _, keyCode, event -> onSearchListener(keyCode, event)}
+            setOnKeyListener{ _, keyCode, event -> onSearchListener(keyCode, event) }
             addTextChangedListener(object : TextWatcher{
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -90,8 +91,10 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    lifecycleScope.launch {
-                        searchQueryFlow.emit(s.toString())
+                    if (NetworkUtils.isNetworkAvailable(requireContext())) {
+                        lifecycleScope.launch {
+                            searchQueryFlow.emit(s.toString())
+                        }
                     }
                 }
 
@@ -207,12 +210,15 @@ class MapFragment : Fragment() , SearchLocationContract.Listener{
     }
 
     private fun onSearchListener(keyCode: Int, event: KeyEvent) : Boolean{
-        if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-            viewModel.getCoordinates(binding.editTextText.text.toString())
-            return true
-        } else {
-            return false
+        if (NetworkUtils.isNetworkAvailable(requireContext())) {
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                viewModel.getCoordinates(binding.editTextText.text.toString())
+                return true
+            } else {
+                return false
+            }
         }
+        return false
     }
     private fun onSuccess(data : Any?){
         if (data is Location) {

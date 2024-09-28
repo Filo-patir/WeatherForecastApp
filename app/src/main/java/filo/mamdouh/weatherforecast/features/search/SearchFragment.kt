@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Lifecycle
@@ -16,6 +17,7 @@ import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
 import filo.mamdouh.weatherforecast.features.search.adapter.RVAdapter
+import filo.mamdouh.weatherforecast.logic.NetworkUtils
 import filo.mamdouh.weatherforecast.models.LocationItem
 import kotlinx.coroutines.launch
 
@@ -39,7 +41,9 @@ class SearchFragment : Fragment() , SearchLocationContract.View{
         super.onViewCreated(view, savedInstanceState)
         val viewModel by hiltNavGraphViewModels<SearchViewModel>(R.id.nav_graph)
         binding.floatingActionButton.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
+            if (NetworkUtils.isNetworkAvailable(requireContext()))
+                Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
+            else Toast.makeText(requireContext(), "No Internet Connection", Toast.LENGTH_SHORT).show()
         }
         val adapter = RVAdapter(this)
         binding.searchRV.apply {

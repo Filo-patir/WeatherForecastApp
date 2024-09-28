@@ -11,4 +11,5 @@ data class LocationItem(
     val lat: Double,
     val lon: Double,
     val name: String,
+    var home:Boolean = false
 )

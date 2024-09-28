@@ -1,6 +1,7 @@
 package filo.mamdouh.weatherforecast.datastorage
 
 import filo.mamdouh.weatherforecast.models.AlarmItem
+import filo.mamdouh.weatherforecast.models.CachedData
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
@@ -25,8 +26,8 @@ interface IRepository {
     fun deleteSavedLocation(savedLocations: LocationItem): Flow<Int>
     fun deleteAllSavedLocations(): Flow<Int>
     //ObjectBox Functions
-    fun getWeeklyForecastFromLocal(): Flow<List<WeatherForecast>>
-    suspend fun saveWeeklyForecast(weatherForecast: WeatherForecast, dispatcher: CoroutineDispatcher)
+    fun getWeeklyForecastFromLocal(): Flow<List<CachedData>>
+    suspend fun saveWeeklyForecast(weatherForecast: CachedData, dispatcher: CoroutineDispatcher)
     //Alarm Functions
     fun getAlarm(): Flow<List<AlarmItem>>
     suspend fun insertAlarm(alarmItem: AlarmItem)

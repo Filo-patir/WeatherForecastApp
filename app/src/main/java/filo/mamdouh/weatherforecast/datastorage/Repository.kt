@@ -6,6 +6,7 @@ import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLo
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.ISharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSource
 import filo.mamdouh.weatherforecast.models.AlarmItem
+import filo.mamdouh.weatherforecast.models.CachedData
 import filo.mamdouh.weatherforecast.models.CurrentWeather
 import filo.mamdouh.weatherforecast.models.Location
 import filo.mamdouh.weatherforecast.models.LocationItem
@@ -69,10 +70,10 @@ class Repository @Inject constructor(
 
 
     //  * ObjectBox Functions
-    override fun getWeeklyForecastFromLocal(): Flow<List<WeatherForecast>> {
+    override fun getWeeklyForecastFromLocal(): Flow<List<CachedData>> {
         return boxes.getWeatherForecast()
     }
-    override suspend fun saveWeeklyForecast(weatherForecast: WeatherForecast, dispatcher: CoroutineDispatcher) {
+    override suspend fun saveWeeklyForecast(weatherForecast: CachedData, dispatcher: CoroutineDispatcher) {
         boxes.putWeatherForecast(weatherForecast, dispatcher)
     }
 
