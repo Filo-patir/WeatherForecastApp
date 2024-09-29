@@ -20,6 +20,7 @@ import filo.mamdouh.weatherforecast.R
 import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.favourite.rvadapters.HomeBaseRecyclerViewAdapter
+import filo.mamdouh.weatherforecast.logic.NetworkUtils
 import filo.mamdouh.weatherforecast.models.CachedData
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -89,7 +90,9 @@ class WeatherDetailsFragment : Fragment() {
             adapter = adapterrv
         }
         binding.locationImg.setOnClickListener {
-            Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_searchFragment)
+            if(NetworkUtils.isNetworkAvailable(requireContext()))
+                Navigation.findNavController(it).navigate(R.id.action_weatherDetailsFragment_to_searchFragment)
+            else Toast.makeText(context, "This Feature Requires Internet", Toast.LENGTH_SHORT).show()
         }
         binding.menuImg.setOnClickListener {
             TopSheetBehavior.from(binding.topSheetView).state = TopSheetBehavior.STATE_EXPANDED
