@@ -16,6 +16,6 @@ interface SavedLocationsDao {
     fun deleteAll() : Int
     @Delete
     fun delete(savedLocations: LocationItem) : Int
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(savedLocations: LocationItem) : Long
 }

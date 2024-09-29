@@ -1,11 +1,11 @@
 package filo.mamdouh.weatherforecast.contracts
 
-import filo.mamdouh.weatherforecast.models.LocationItem
+import filo.mamdouh.weatherforecast.models.CurrentWeather
 
 interface SearchLocationContract {
     interface View{
-        fun onItemClickListener(lon: Double, lat: Double)
-        fun onDeleteClicked(locationItem: LocationItem)
+        fun onItemClickListener(currentWeather: CurrentWeather)
+        fun onDeleteClicked(position: Int)
     }
     interface Listener{
         fun onSearchLocationClicked()

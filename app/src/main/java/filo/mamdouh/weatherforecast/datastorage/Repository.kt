@@ -1,6 +1,6 @@
 package filo.mamdouh.weatherforecast.datastorage
 
-import filo.mamdouh.weatherforecast.datastorage.local.objectbox.Boxes
+import filo.mamdouh.weatherforecast.datastorage.local.objectbox.IBoxes
 import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSource
 import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSource
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.ISharedPreferencesHandler
@@ -21,10 +21,10 @@ class Repository @Inject constructor(
     private val localDataSource: SavedLocationDataSource,
     private val networkDataSource: NetworkDataSource,
     private val sharedPreferencesHandler: ISharedPreferencesHandler,
-    private val alarmDataSource: AlarmDataSource
+    private val alarmDataSource: AlarmDataSource,
+    private val boxes: IBoxes
 ) :
     IRepository {
-        private val boxes = Boxes()
 
     //  * Settings Functions
     override fun saveSettings(name: String, value: String) {

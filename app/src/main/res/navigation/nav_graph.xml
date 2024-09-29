@@ -31,8 +31,8 @@
             android:id="@+id/action_searchFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
         <action
-            android:id="@+id/action_searchFragment_to_weatherDetailsFragment2"
-            app:destination="@id/weatherDetailsFragment" />
+            android:id="@+id/action_searchFragment_to_favouriteDisplayFragment"
+            app:destination="@id/favouriteDisplayFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
@@ -54,4 +54,9 @@
         android:name="filo.mamdouh.weatherforecast.features.notification.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/favouriteDisplayFragment"
+        android:name="filo.mamdouh.weatherforecast.features.favourite.FavouriteDisplayFragment"
+        android:label="fragment_favourite_display"
+        tools:layout="@layout/fragment_favourite_display" />
 </navigation>

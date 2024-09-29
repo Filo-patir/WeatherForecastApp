@@ -9,14 +9,14 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-class Boxes {
+class Boxes : IBoxes {
     private val weatherForecastBox = ObjectBox.store.boxFor(CachedData::class)
 
-    suspend fun putWeatherForecast(weatherForecast: CachedData , dispatcher: CoroutineDispatcher) = withContext(dispatcher){
+    override suspend fun putWeatherForecast(weatherForecast: CachedData, dispatcher: CoroutineDispatcher) = withContext(dispatcher){
         weatherForecastBox.put(weatherForecast)
     }
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getWeatherForecast(): Flow<MutableList<CachedData>> {
+    override fun getWeatherForecast(): Flow<MutableList<CachedData>> {
         val query: Query<CachedData> = weatherForecastBox.query().build()
         return query.subscribe().toFlow()
     }

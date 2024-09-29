@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.home.rvadapters
+package filo.mamdouh.weatherforecast.features.favourite.rvadapters
 
 import android.content.Context
 import android.view.LayoutInflater

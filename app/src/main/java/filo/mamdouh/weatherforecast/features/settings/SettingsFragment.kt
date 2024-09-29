@@ -1,5 +1,6 @@
 package filo.mamdouh.weatherforecast.features.settings
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.databinding.FragmentSettingsBinding
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
@@ -168,5 +170,13 @@ class SettingsFragment : Fragment() {
             viewModel.setLocalization("ar")
         }
         Toast.makeText(context, "Please Restart the app to apply the changes", Toast.LENGTH_SHORT).show()
+    }
+    private fun changLanguage(code: String) {
+        val local = Locale(code)
+        Locale.setDefault(local)
+        val config = Configuration()
+        config.setLocale(local)
+        resources.updateConfiguration(config, resources.displayMetrics)
+        requireActivity().recreate()
     }
 }

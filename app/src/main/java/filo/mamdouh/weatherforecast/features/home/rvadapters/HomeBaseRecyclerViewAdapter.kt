@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.home.rvadapters
+package filo.mamdouh.weatherforecast.features.favourite.rvadapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,11 +13,12 @@ import filo.mamdouh.weatherforecast.databinding.DetailsRecyclerViewBinding
 import filo.mamdouh.weatherforecast.databinding.ParentWeatherForecastItemBinding
 import filo.mamdouh.weatherforecast.databinding.SunMoonRiseItemBinding
 import filo.mamdouh.weatherforecast.logic.toHourMinute
-import filo.mamdouh.weatherforecast.models.CurrentWeather
-import filo.mamdouh.weatherforecast.models.ForecastItems
+import filo.mamdouh.weatherforecast.models.CachedData
 import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
-class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeBaseRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var context: Context
     companion object {
         const val VIEW_TYPE_ITEM_1 = 0
@@ -34,23 +35,11 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             else -> throw IllegalArgumentException("Invalid position")
         }
     }
-    var forecastItems: List<ForecastItems> = emptyList()
-        fun setForecastItems(forecastItems: List<ForecastItems> , timezone : Int) {
-            this.forecastItems = forecastItems
-            this.timeZone = timezone
+    private var data: List<CachedData> = emptyList()
+        fun setForecastItems(data: List<CachedData>) {
+            this.data = data
             notifyDataSetChanged()
         }
-    var timeZone: Int = 0
-        set(value){
-            field = value
-            notifyDataSetChanged()
-        }
-    var data = CurrentWeather()
-
-    fun setCurrentWeather(currentWeather: CurrentWeather) {
-        data = currentWeather
-        notifyDataSetChanged()
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         return when (viewType) {
@@ -66,10 +55,11 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val now = getClosedTime(data) ?: return
         when (position) {
             0 -> {
                 val viewHolder = holder as ForeCastViewHolder
-                val adapter = ForeCastAdapter(forecastItems,timeZone, true)
+                val adapter = HomeForeCastAdapter(getDayList(data) , data[0].timeZone,true)
                 viewHolder.binding.childWeatherForecastRV.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
                     this.adapter = adapter
@@ -77,11 +67,11 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 viewHolder.binding.apply {
                     hourlyTextView.setOnClickListener{
                         buttonBackground2.animate().translationX(0f)
-                            adapter.updateList(forecastItems,true)
+                            adapter.updateList(getDayList(data),true)
                         }
                     weeklyTextView.setOnClickListener{
                         buttonBackground2.animate().translationX(500f)
-                        adapter.updateList(forecastItems,false)
+                        adapter.updateList(getWeekList(data),false)
                     }
                 }
             }
@@ -90,7 +80,7 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 viewHolder.binding.apply {
                     detailsRecyclerView.apply {
                         layoutManager = GridLayoutManager(context,2)
-                        adapter = DetailsAdapter(data.main,data.visibility)
+                        adapter = HomeDetailsAdapter(now.main,now.visibility)
                     }
                 }
             }
@@ -98,27 +88,27 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 val viewHolder = holder as CloudsWindSpeedViewHolder
                 viewHolder.binding.apply {
                     winSpeed.apply {
-                        speed.text = data.wind.speed.toString()
-                        circularProgressBar.animate().rotation(data.wind.deg.toFloat())
+                        speed.text = now.wind.speed.toString()
+                        circularProgressBar.animate().rotation(now.wind.deg.toFloat())
                         speedUnit.text = context.getString(R.string.meter_sec)
                     }
                     clouds.apply {
                         textView9.text = buildString {
-                            append(data.clouds.all.toString())
+                            append(now.clouds.all.toString())
                             append(context.getString(R.string.percentage))
                         }
-                        linearProgressIndicator.progress = data.clouds.all
+                        linearProgressIndicator.progress = now.clouds.all
                     }
                 }
             }
             3 -> {
                 val viewHolder = holder as SunriseViewHolder
                 viewHolder.binding.apply {
-                    sunriseTxt.text = data.sys.sunrise.toHourMinute(timeZone)
-                    sunsetTxt.text = data.sys.sunset.toHourMinute(timeZone)
-                    val dayLength = data.sys.sunset - data.sys.sunrise
+                    sunriseTxt.text = now.sys.sunrise.toHourMinute(now.timeZone)
+                    sunsetTxt.text = now.sys.sunset.toHourMinute(now.timeZone)
+                    val dayLength = now.sys.sunset - now.sys.sunrise
                     if(dayLength>0) {
-                        val sunriseDifference = Instant.now().epochSecond - data.sys.sunrise
+                        val sunriseDifference = Instant.now().epochSecond - now.sys.sunrise
                         val sunImgVal = (sunriseDifference / dayLength.toFloat()) * 180
                         imageView5.animate().rotation(sunImgVal).setDuration(1000)
                     }
@@ -141,5 +131,28 @@ class BaseRecyclerViewAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         var binding = SunMoonRiseItemBinding.bind(itemView)
     }
     class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    }
+
+    private fun getDayList(it: List<CachedData>): List<CachedData> {
+        return it.filter { item -> Instant.ofEpochSecond(item.key.dt).atZone(ZoneId.systemDefault()).toLocalDate() == LocalDate.now() }
+    }
+
+    private fun getWeekList(it: List<CachedData>): List<CachedData> {
+        val dailyTimestamps = mutableMapOf<LocalDate, CachedData>()
+        // Iterate through the timestamps
+        for (timestamp in it) {
+            val date = Instant.ofEpochSecond(timestamp.key.dt).atZone(ZoneId.systemDefault()).toLocalDate()
+            // Only add the timestamp if it's not already in the map
+            if (!dailyTimestamps.containsKey(date)) {
+                dailyTimestamps[date] = timestamp
+            }
+        }
+        // Get the values (timestamps) from the map
+        return dailyTimestamps.values.toList()
+    }
+    private fun getClosedTime(list: List<CachedData>): CachedData?{
+        val now = Instant.now().epochSecond
+        // Find the closest timestamp
+        return list.minByOrNull{ kotlin.math.abs(it.key.dt- now) }
     }
 }

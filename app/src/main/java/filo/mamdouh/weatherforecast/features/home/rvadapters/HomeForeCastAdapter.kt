@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.home.rvadapters
+package filo.mamdouh.weatherforecast.features.favourite.rvadapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,12 +11,13 @@ import filo.mamdouh.weatherforecast.databinding.WeatherForecastItemBinding
 import filo.mamdouh.weatherforecast.logic.toDay
 import filo.mamdouh.weatherforecast.logic.toDrawable
 import filo.mamdouh.weatherforecast.logic.toHour
+import filo.mamdouh.weatherforecast.models.CachedData
 import filo.mamdouh.weatherforecast.models.ForecastItems
 
-class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone:Int , private var flag: Boolean) :
-    RecyclerView.Adapter<ForeCastAdapter.ForeCastViewHolder>() {
+class HomeForeCastAdapter(private var list: List<CachedData>, private val timeZone:Int, private var flag: Boolean) :
+    RecyclerView.Adapter<HomeForeCastAdapter.ForeCastViewHolder>() {
     lateinit var context: Context
-        fun updateList(list: List<ForecastItems>, flag: Boolean){
+        fun updateList(list: List<CachedData>, flag: Boolean){
             this.list = list
             this.flag = flag
             notifyDataSetChanged()
@@ -37,11 +38,13 @@ class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone
                     holder.binding.apply {
                         dayTxt.animate().translationY(0f)
                         imageView.animate().translationY(0f)
-                        dayTxt.text = dt.toHour(timeZone)
+                        dayTxt.text = key.dt.toHour(timeZone)
                         imageView.setImageResource(weather[0].icon.toDrawable())
-                        if (weather[0].icon.contains("d"))
-                        itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.sunny_background)
-                        else itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.night_background)
+                        when {
+                            weather[0].icon.contains("01d") ->  itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.sunny_background)
+                            weather[0].icon.contains("01n") -> itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.night_background)
+                            else -> itemLayout.background = AppCompatResources.getDrawable(context,R.drawable.cloudy_background)
+                        }
                         weatherTxt.text = buildString {
                             append(main.temp.toString())
                             append(context.getString(R.string.degree))
@@ -54,7 +57,7 @@ class ForeCastAdapter(private var list: List<ForecastItems>,private val timeZone
                     holder.binding.apply {
                         dayTxt.animate().translationY(-200f)
                         imageView.animate().translationY(100f)
-                        dayTxt.text = dt.toDay(timeZone)
+                        dayTxt.text = key.dt.toDay(timeZone)
                         imageView.setImageResource(weather[0].icon.toDrawable())
                         weatherTxt.text = buildString {
                             append(main.temp.toString())

@@ -34,9 +34,9 @@ class RVAdapter(private val listener: SearchLocationContract.View) : ListAdapter
             iconImg.setImageResource(item.weather[0].icon.toDrawable())
             highLowValue.text = String.format(context.getString(R.string.high_and_low), item.main.temp_max, item.main.temp_min)
             deleteBtn.setOnClickListener {
-//                listener.onDeleteClicked()
+                listener.onDeleteClicked(position)
             }
-
+            holder.binding.root.setOnClickListener { listener.onItemClickListener(item) }
         }
     }
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -8,9 +8,9 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-fun Long.toTime(timeZone: Int): String {
+fun Long.toDate(timeZone: Int): String {
     val dateTime = Instant.ofEpochSecond(this).atZone(ZoneOffset.ofTotalSeconds(timeZone)).toLocalDateTime()
-    return DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss a").format(dateTime)
+    return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(dateTime)
 }
 
 fun Long.toHourMinute(timeZone: Int): String {

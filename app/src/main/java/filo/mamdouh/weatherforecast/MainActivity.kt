@@ -10,31 +10,34 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import filo.mamdouh.weatherforecast.contracts.SettingsUpdater
+import filo.mamdouh.weatherforecast.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 import java.util.Locale
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), SettingsUpdater {
     private val viewModel by viewModels<MainViewModel>()
+    lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        if(isDay())
+            binding.root.setBackgroundResource(R.drawable.sunny_background_color)
+        else
+            binding.root.setBackgroundResource(R.drawable.night_background_color)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         lifecycleScope.launch {
-            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED){
-                viewModel.localization.collect{
-                    checkAndChangLocality(it)
-                }
-            }
+            checkAndChangLocality(viewModel.getLocalization())
         }
     }
     private fun checkPermissions() : Boolean {
@@ -79,6 +82,22 @@ class MainActivity : AppCompatActivity(), SettingsUpdater {
             config.setLayoutDirection(newLocale)
             resources.updateConfiguration(config,resources.displayMetrics)
             recreate()
+        }
+    }
+
+    fun isDay(): Boolean {
+        val currentTime = LocalTime.now()
+        val dayStart = LocalTime.of(6, 0)  // 6:00 AM
+        val nightStart = LocalTime.of(18, 0)  // 6:00 PM
+
+        return when {
+            currentTime.isAfter(dayStart) && currentTime.isBefore(nightStart) -> {
+                true
+            }
+
+            else -> {
+                false
+            }
         }
     }
 

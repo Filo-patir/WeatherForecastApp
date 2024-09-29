@@ -1,9 +1,12 @@
 package filo.mamdouh.weatherforecast.models
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "saved_locations")
+@Entity(tableName = "saved_locations",
+    indices = [Index(value = ["name"], unique = true)]
+)
 data class LocationItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int,

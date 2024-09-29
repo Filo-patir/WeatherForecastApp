@@ -8,6 +8,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import filo.mamdouh.weatherforecast.datastorage.IRepository
 import filo.mamdouh.weatherforecast.datastorage.Repository
+import filo.mamdouh.weatherforecast.datastorage.local.objectbox.Boxes
+import filo.mamdouh.weatherforecast.datastorage.local.objectbox.IBoxes
 import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSource
 import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSourceImpl
 import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSource
@@ -23,12 +25,13 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun provideRepository(savedLocationDataSource: SavedLocationDataSource, networkDataSource: NetworkDataSource, sharedPreferencesHandler: ISharedPreferencesHandler, alarmDataSource: AlarmDataSource): IRepository {
+    fun provideRepository(savedLocationDataSource: SavedLocationDataSource, networkDataSource: NetworkDataSource, sharedPreferencesHandler: ISharedPreferencesHandler, alarmDataSource: AlarmDataSource, boxes: IBoxes): IRepository {
         return Repository(
             savedLocationDataSource,
             networkDataSource,
             sharedPreferencesHandler,
-            alarmDataSource
+            alarmDataSource,
+            boxes
         )
     }
     @Provides
@@ -54,6 +57,12 @@ class AppModule {
     @Singleton
     fun provideAlarmDataSource(@ApplicationContext context: Context): AlarmDataSource {
         return AlarmDataSourceImpl(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBoxes(): IBoxes {
+        return Boxes()
     }
 
 }

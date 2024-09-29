@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(private val repository: IRepository): ViewModel() {
     private val _local = MutableStateFlow(true)
     val local = _local.onStart { getLocalization() }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
-    private fun getLocalization(){
+        fun getLocalization(){
         viewModelScope.launch {
              repository.getSettings(SettingsConstants.LANGUAGE.toString()).collect{
                  _local.emit(it=="en")

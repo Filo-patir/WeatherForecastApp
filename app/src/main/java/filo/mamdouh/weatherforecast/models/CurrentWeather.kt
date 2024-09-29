@@ -5,7 +5,7 @@ data class CurrentWeather(
     val clouds: Clouds = Clouds(),
     val cod: Int = 0,
     val coord: Coord = Coord(),
-    val dt: Int = 0,
+    val dt: Long = 0,
     val id: Int= 0,
     val main: Main = Main(),
     val name: String = "",

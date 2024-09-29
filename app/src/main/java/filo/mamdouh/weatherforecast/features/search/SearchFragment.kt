@@ -18,17 +18,13 @@ import filo.mamdouh.weatherforecast.contracts.SearchLocationContract
 import filo.mamdouh.weatherforecast.databinding.FragmentSearchBinding
 import filo.mamdouh.weatherforecast.features.search.adapter.RVAdapter
 import filo.mamdouh.weatherforecast.logic.NetworkUtils
-import filo.mamdouh.weatherforecast.models.LocationItem
+import filo.mamdouh.weatherforecast.models.CurrentWeather
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() , SearchLocationContract.View{
     lateinit var binding: FragmentSearchBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private val viewModel by hiltNavGraphViewModels<SearchViewModel>(R.id.nav_graph)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +35,6 @@ class SearchFragment : Fragment() , SearchLocationContract.View{
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel by hiltNavGraphViewModels<SearchViewModel>(R.id.nav_graph)
         binding.floatingActionButton.setOnClickListener {
             if (NetworkUtils.isNetworkAvailable(requireContext()))
                 Navigation.findNavController(it).navigate(R.id.action_searchFragment_to_mapFragment)
@@ -59,11 +54,15 @@ class SearchFragment : Fragment() , SearchLocationContract.View{
         }
     }
 
-    override fun onItemClickListener(lon: Double, lat: Double) {
-//        TODO("Not yet implemented")
+    override fun onItemClickListener(currentWeather: CurrentWeather) {
+        val bundle = Bundle().apply {
+            putDouble("lon",currentWeather.coord.lon)
+            putDouble("lat", currentWeather.coord.lat)
+        }
+        Navigation.findNavController(binding.root).navigate(R.id.action_searchFragment_to_favouriteDisplayFragment, bundle)
     }
 
-    override fun onDeleteClicked(locationItem: LocationItem) {
-//        TODO("Not yet implemented")
+    override fun onDeleteClicked(position: Int) {
+        viewModel.deleteLocation(position)
     }
 }

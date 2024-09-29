@@ -47,6 +47,24 @@ android {
 }
 
 dependencies {
+    // Unit Testing
+    testImplementation("org.hamcrest:hamcrest-all:1.3")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.robolectric:robolectric:4.8")
+
+    // InstantTaskExecutorRule
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation("androidx.arch.core:core-testing:2.1.0")
+
+    // Coroutines Testing
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2")
+
+    // Hamcrest for assertions
+    testImplementation("org.hamcrest:hamcrest:2.2")
+    testImplementation("org.hamcrest:hamcrest-library:2.2")
+    androidTestImplementation("org.hamcrest:hamcrest:2.2")
+    androidTestImplementation("org.hamcrest:hamcrest-library:2.2")
     // ObjectBox
     implementation(libs.objectbox.kotlin)
     //lifecycle for stateflow
@@ -58,6 +76,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.hilt.common)
+    implementation(libs.androidx.junit.ktx)
     kapt(libs.hilt.android.compiler)
     //Retrofit
     implementation(libs.retrofit)
@@ -81,6 +100,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler.v120)
 }
 
 kapt{

@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.workers
+package filo.mamdouh.weatherforecast.logic.workers
 
 import android.content.Context
 import android.util.Log
@@ -7,14 +7,17 @@ import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import filo.mamdouh.weatherforecast.datastorage.Repository
+import filo.mamdouh.weatherforecast.datastorage.local.objectbox.Boxes
 import filo.mamdouh.weatherforecast.datastorage.local.room.alarm.AlarmDataSourceImpl
 import filo.mamdouh.weatherforecast.datastorage.local.room.savedlocation.SavedLocationDataSourceImpl
 import filo.mamdouh.weatherforecast.datastorage.local.sharedpref.SharedPreferencesHandler
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkDataSourceImpl
 import filo.mamdouh.weatherforecast.models.CachedCompositeKey
 import filo.mamdouh.weatherforecast.models.CachedData
+import filo.mamdouh.weatherforecast.models.Sys
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltWorker
@@ -23,7 +26,8 @@ class FetchWorker (context: Context, workerParams: WorkerParameters) : Worker(co
         SavedLocationDataSourceImpl(context),
         NetworkDataSourceImpl(),
         SharedPreferencesHandler(context),
-        AlarmDataSourceImpl(context)
+        AlarmDataSourceImpl(context),
+        Boxes()
     )
     private val TAG = "worker_count"
     private var count : Int = try{
@@ -56,7 +60,7 @@ class FetchWorker (context: Context, workerParams: WorkerParameters) : Worker(co
 
     private fun fetchData(){
         CoroutineScope(Dispatchers.IO).launch{
-            repository.getSavedLocations().collect { list ->
+            repository.getSavedLocations().map { location -> location.filter { it.home } }.collect { list ->
                 list.forEach { item ->
                     val value = repository.getWeeklyForecast(item.lat,item.lon,"metric")
                     if (value.isSuccessful)
@@ -70,7 +74,8 @@ class FetchWorker (context: Context, workerParams: WorkerParameters) : Worker(co
                                     CachedCompositeKey(it.dt,data.city),
                                     it.clouds,
                                     it.main,
-                                    it.pop,
+                                    Sys(sunset = data.city.sunset.toLong() , sunrise = data.city.sunrise.toLong()),
+                                    data.city.timezone,
                                     it.visibility,
                                     it.weather,
                                     it.wind), Dispatchers.IO)

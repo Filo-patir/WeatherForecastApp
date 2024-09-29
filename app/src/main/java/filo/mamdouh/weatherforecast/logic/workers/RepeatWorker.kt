@@ -1,4 +1,4 @@
-package filo.mamdouh.weatherforecast.features.workers
+package filo.mamdouh.weatherforecast.logic.workers
 
 import android.content.Context
 import androidx.work.Constraints
