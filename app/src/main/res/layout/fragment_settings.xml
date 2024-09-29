@@ -24,9 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
             android:drawableEnd="@android:drawable/radiobutton_off_background"
-            android:drawableTint="@color/cloudy_background_color"
             android:text="@string/gps"
             android:textColor="@color/white" />
 
@@ -35,8 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
             android:text="@string/map"
             android:textColor="@color/white" />
 
@@ -123,9 +119,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
-            android:drawableTint="@color/cloudy_background_color"
             android:text="@string/celcius_c"
             android:textColor="@color/white" />
 
@@ -134,8 +127,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
             android:text="@string/kelvin_c"
             android:textColor="@color/white" />
 
@@ -144,8 +135,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
             android:text="@string/fahrenheit_f"
             android:textColor="@color/white" />
     </RadioGroup>
@@ -168,9 +157,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
-            android:drawableTint="@color/cloudy_background_color"
             android:text="@string/meter_p_second"
             android:textColor="@color/white" />
 
@@ -179,8 +165,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:button="@null"
-            android:drawableEnd="@android:drawable/radiobutton_off_background"
             android:text="@string/miles_hour"
             android:textColor="@color/white" />
 

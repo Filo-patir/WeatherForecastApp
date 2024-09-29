@@ -22,6 +22,7 @@ import java.util.Locale
 class MainActivity : AppCompatActivity(), SettingsUpdater {
     private val viewModel by viewModels<MainViewModel>()
     lateinit var binding : ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -14,7 +14,7 @@ import retrofit2.Response
 interface IRepository {
     // Settings Functions
     fun saveSettings(name: String, value: String)
-    fun getSettings(name: String): Flow<String>
+    fun getSettings(name: String): String
     // Api Functions
     suspend fun getCurrentWeather(lat: Double, lon: Double, unit: String): Response<CurrentWeather>
     suspend fun getWeeklyForecast(lat: Double, lon: Double, unit: String): Response<WeatherForecast>

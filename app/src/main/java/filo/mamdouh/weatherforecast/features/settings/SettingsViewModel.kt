@@ -15,12 +15,31 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(private val repository: IRepository): ViewModel() {
     private val _local = MutableStateFlow(true)
-    val local = _local.onStart { getLocalization() }.stateIn(viewModelScope, SharingStarted.Eagerly, true)
+    val local = _local.onStart { getLocalization() }.stateIn(viewModelScope, SharingStarted.Lazily, true)
+    private val _unit = MutableStateFlow("C")
+    val unit = _unit.onStart { getUnit() }.stateIn(viewModelScope, SharingStarted.Lazily, "C")
+    private val _speed = MutableStateFlow(true)
+    val speed = _speed.onStart { getWinSpeed() }.stateIn(viewModelScope, SharingStarted.Lazily, true)
+    private val _location = MutableStateFlow(true)
+    val location = _location.onStart { getLocation() }.stateIn(viewModelScope, SharingStarted.Lazily, true)
         fun getLocalization(){
         viewModelScope.launch {
-             repository.getSettings(SettingsConstants.LANGUAGE.toString()).collect{
-                 _local.emit(it=="en")
-             }
+             _local.value = repository.getSettings(SettingsConstants.LANGUAGE.toString()) == "en"
+        }
+    }
+    private fun getUnit(){
+        viewModelScope.launch {
+            _unit.value = repository.getSettings(SettingsConstants.TEMP.toString())
+        }
+    }
+    private fun getWinSpeed(){
+        viewModelScope.launch {
+            _speed.value = repository.getSettings(SettingsConstants.SPEED.toString()) == "mps"
+        }
+    }
+    private fun getLocation(){
+        viewModelScope.launch {
+            _location.value = repository.getSettings(SettingsConstants.LOCATION.toString()) == "gps"
         }
     }
     fun setLocalization(locale: String){

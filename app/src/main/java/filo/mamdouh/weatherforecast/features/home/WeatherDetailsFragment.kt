@@ -1,7 +1,6 @@
 package filo.mamdouh.weatherforecast.features.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +20,14 @@ import filo.mamdouh.weatherforecast.databinding.FragmentWeatherDetailsBinding
 import filo.mamdouh.weatherforecast.datastorage.network.NetworkResponse
 import filo.mamdouh.weatherforecast.features.favourite.rvadapters.HomeBaseRecyclerViewAdapter
 import filo.mamdouh.weatherforecast.logic.NetworkUtils
-import filo.mamdouh.weatherforecast.models.CachedData
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class WeatherDetailsFragment : Fragment() {
     private lateinit var binding: FragmentWeatherDetailsBinding
     private lateinit var adapterrv : HomeBaseRecyclerViewAdapter
+    private var unit = "C"
+    private var speed = "mps"
     override fun onResume() {
         super.onResume()
         val callback = object : OnBackPressedCallback(true) {
@@ -63,22 +60,25 @@ class WeatherDetailsFragment : Fragment() {
         adapterrv = HomeBaseRecyclerViewAdapter()
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.currentWeather.collect{
+                viewModel.currentWeather.collect{ it ->
                     when(it) {
                         is NetworkResponse.Failure -> Toast.makeText(context, "Failure: ${it.errorMessage}", Toast.LENGTH_SHORT)
                         is NetworkResponse.Success -> {
-                            Log.d("Filo", "onViewCreated: ${it.data}")
-                            val data = it.data as List<CachedData>
-                            adapterrv.setForecastItems(data)
-                            binding.apply {
-                                date.text = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                                time.text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"))
-                                mainTemp.text = data[0].main.temp.toString()
-                                weatherDesc.text = data[0].weather[0].description
-                                location.text = data[0].key.city.name
-                                lowTxt.text = data[0].main.temp_min.toString()
-                                highTxt.text = data[0].main.temp_max.toString()
-                            }
+//                            Log.d("Filo", "onViewCreated: ${it.data}")
+//                            viewModel.unit.take(2).collect{
+//                                unit = it
+//                            }
+//                            val data = it.data as List<CachedData>
+//                            adapterrv.setForecastItems(data)
+//                            binding.apply {
+//                                date.text = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+//                                time.text = LocalDateTime.now().format(DateTimeFormatter.ofPattern("hh:mm a"))
+//                                mainTemp.text = data[0].main.temp.toString()
+//                                weatherDesc.text = data[0].weather[0].description
+//                                location.text = data[0].key.city.name
+//                                lowTxt.text = data[0].main.temp_min.toString()
+//                                highTxt.text = data[0].main.temp_max.toString()
+//                            }
                         }
                         is NetworkResponse.Loading -> {}
                     }

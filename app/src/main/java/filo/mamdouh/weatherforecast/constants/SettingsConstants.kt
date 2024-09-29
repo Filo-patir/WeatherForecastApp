@@ -4,5 +4,6 @@ enum class SettingsConstants {
     LANGUAGE,
     SPEED,
     TEMP,
-    LOCATION
+    LOCATION,
+    NONE
 }

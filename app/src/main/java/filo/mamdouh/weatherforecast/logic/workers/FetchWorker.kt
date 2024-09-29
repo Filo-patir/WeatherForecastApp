@@ -33,9 +33,9 @@ class FetchWorker (context: Context, workerParams: WorkerParameters) : Worker(co
     private var count : Int = try{
         var c = 0
         CoroutineScope(Dispatchers.IO).launch {
-            repository.getSettings(TAG).collect {
-                if (it.isNotBlank())
-                    c = it.toInt()
+           val n =  repository.getSettings(TAG)
+            if( n.isNotEmpty()){
+                c = n.toInt()
             }
         }
         c

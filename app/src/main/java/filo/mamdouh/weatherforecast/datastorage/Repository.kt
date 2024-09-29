@@ -31,7 +31,7 @@ class Repository @Inject constructor(
         sharedPreferencesHandler.save(name, value)
     }
 
-    override fun getSettings(name: String): Flow<String> {
+    override fun getSettings(name: String): String {
         return sharedPreferencesHandler.get(name)
     }
 
